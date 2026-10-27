@@ -105,7 +105,8 @@ def describe(info: dict) -> str:
     return "\n".join(out)
 
 
-def first_working(candidates: list[str], build) -> tuple[str, dict, object]:
+def first_working(candidates: list[str], build, check) -> tuple[str, dict, object]:
+    """Prøv tabellerne i rækkefølge; den første, der både kan læses og passer med filen, vinder."""
     errors = []
     for table in candidates:
         try:
@@ -114,7 +115,14 @@ def first_working(candidates: list[str], build) -> tuple[str, dict, object]:
             errors.append(f"{table}: {err}")
             continue
         try:
-            return table, info, build(info)
+            rows = build(info)
+            try:
+                check(rows)
+            except Stop as err:
+                head = ", ".join(str(list(r.values())) for r in rows[:2])
+                tail = ", ".join(str(list(r.values())) for r in rows[-3:])
+                raise Stop(f"{table}: {err}. Fik {len(rows)} rækker – første: {head}; sidste: {tail}")
+            return table, info, rows
         except Stop as err:
             errors.append(f"{err}\n{describe(info)}")
     raise Stop("Ingen af tabellerne passede:\n" + "\n\n".join(errors))
@@ -190,7 +198,7 @@ def build_loen(info: dict):
         {"kvartal": quarter_label(p), "privat_aarlig_stigning": f"{series[priv_id][p]:.1f}",
          "alle_sektorer_aarlig_stigning": f"{series[alle_id][p]:.1f}"}
         for p in periods
-    ][-8:]
+    ]
 
 
 def build_byg(info: dict):
@@ -231,7 +239,7 @@ def build_byg(info: dict):
         {"kvartal": quarter_label(p), "i_alt": f"{s[p][tot_id]:.1f}",
          "materialer": f"{s[p][mat_id]:.1f}", "arbejdsloen": f"{s[p][arb_id]:.1f}"}
         for p in periods
-    ][-8:]
+    ]
 
 
 def build_fpi(info: dict):
@@ -261,7 +269,7 @@ def build_fpi(info: dict):
     periods = sorted(series)
     if not periods:
         raise Stop(f"{info['id']}: ingen tal")
-    return [{"maaned": month_label(p), "aarlig_stigning": f"{series[p]:.1f}"} for p in periods][-12:]
+    return [{"maaned": month_label(p), "aarlig_stigning": f"{series[p]:.1f}"} for p in periods]
 
 
 SOURCES = [
@@ -321,8 +329,7 @@ def main() -> int:
         path = DATA / fname
         fields, old = read_csv(path)
         try:
-            table, _, new = first_working(candidates, build)
-            check_overlap(fname, key, old, new)
+            table, _, new = first_working(candidates, build, lambda rows: check_overlap(fname, key, old, rows))
         except Exception as err:  # noqa: BLE001 – rapportér og fortsæt med de andre kilder
             failed.append(f"{fname}: {err}")
             print(f"FEJL {fname}:\n{err}\n", file=sys.stderr)
@@ -332,6 +339,8 @@ def main() -> int:
         merged = {r[key]: r for r in old}
         merged.update({r[key]: r for r in new})
         rows = sorted(merged.values(), key=lambda r: r[key] if key == "maaned" else (r[key][3:], r[key][:2]))
+        keep = 12 if key == "maaned" else 8
+        rows = rows[-max(keep, len(old)):]
         if rows != old:
             write_csv(path, fields, rows)
             manifest["datasets"][ds_id]["opdateret"] = date.today().isoformat()
