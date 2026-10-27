@@ -105,10 +105,30 @@ def describe(info: dict) -> str:
     return "\n".join(out)
 
 
-def first_working(candidates: list[str], build, check) -> tuple[str, dict, object]:
+_TABLES: list[dict] | None = None
+
+
+def discover(pattern: str) -> list[str]:
+    """Aktive tabeller i Statistikbanken, hvis titel matcher mønstret – nyeste periode først."""
+    global _TABLES
+    if _TABLES is None:
+        try:
+            _TABLES = json.loads(post("/tables", {"lang": "da", "format": "JSON"}))
+        except Exception as err:  # noqa: BLE001
+            print(f"Kunne ikke hente tabeloversigten: {err}", file=sys.stderr)
+            _TABLES = []
+    rx = re.compile(pattern, re.I)
+    hits = [t for t in _TABLES if t.get("active", True) and rx.search(t.get("text", ""))]
+    hits.sort(key=lambda t: (str(t.get("latestPeriod", "")), str(t.get("updated", ""))), reverse=True)
+    return [t["id"] for t in hits]
+
+
+def first_working(candidates: list[str], build, check, pattern: str | None = None) -> tuple[str, dict, object]:
     """Prøv tabellerne i rækkefølge; den første, der både kan læses og passer med filen, vinder."""
     errors = []
-    for table in candidates:
+    found = discover(pattern) if pattern else []
+    order = list(dict.fromkeys(found + candidates))
+    for table in order:
         try:
             info = tableinfo(table)
         except Exception as err:  # tabellen findes ikke
@@ -273,10 +293,10 @@ def build_fpi(info: dict):
 
 
 SOURCES = [
-    # (fil, nøglekolonne, kandidattabeller, bygger, dataset-id)
-    ("loenindeks.csv", "kvartal", ["SBLON1", "ILON22", "ILON12"], build_loen, "loenindeks"),
-    ("byggeomkostninger.csv", "kvartal", ["BYG42", "BYG41"], build_byg, "byggeomkostninger"),
-    ("forbrugerpriser.csv", "maaned", ["PRIS111", "PRIS113", "PRIS112"], build_fpi, "forbrugerpriser"),
+    # (fil, nøglekolonne, kendte tabeller, bygger, dataset-id, mønster til at finde nye tabeller)
+    ("loenindeks.csv", "kvartal", ["SBLON1"], build_loen, "loenindeks", r"^standardberegnet lønindeks"),
+    ("byggeomkostninger.csv", "kvartal", ["BYG42"], build_byg, "byggeomkostninger", r"^byggeomkostningsindeks for boliger"),
+    ("forbrugerpriser.csv", "maaned", ["PRIS111"], build_fpi, "forbrugerpriser", r"^forbrugerprisindeks"),
 ]
 
 
@@ -325,11 +345,11 @@ def main() -> int:
     manifest_path = DATA / "datasets.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     changed, failed = [], []
-    for fname, key, candidates, build, ds_id in SOURCES:
+    for fname, key, candidates, build, ds_id, pattern in SOURCES:
         path = DATA / fname
         fields, old = read_csv(path)
         try:
-            table, _, new = first_working(candidates, build, lambda rows: check_overlap(fname, key, old, rows))
+            table, _, new = first_working(candidates, build, lambda rows: check_overlap(fname, key, old, rows), pattern)
         except Exception as err:  # noqa: BLE001 – rapportér og fortsæt med de andre kilder
             failed.append(f"{fname}: {err}")
             print(f"FEJL {fname}:\n{err}\n", file=sys.stderr)
