@@ -30,8 +30,13 @@ jobs:
         id: hent
         run: python3 scripts/opdater_dst.py
 
-      - name: Commit og push, hvis der er ændringer
+      - name: Kontrollér datafilerne
         if: always() && steps.hent.outcome != 'cancelled'
+        id: tjek
+        run: python3 scripts/tjek_data.py
+
+      - name: Commit og push, hvis der er ændringer
+        if: always() && steps.tjek.outcome == 'success'
         id: commit
         run: |
           if git diff --quiet -- data; then

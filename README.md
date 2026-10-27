@@ -62,6 +62,16 @@ Når en ny periode tilføjes, skal de faste periodehenvisninger i `index.html` (
 | `brancher.csv` | Egen oversigt ud fra Industriens Pension, TEKNIQ og PensionDanmark | Ved overenskomstfornyelse |
 | `haendelser.json` | Udvalgte markedshændelser med kildelink | Løbende |
 
+## Automatisk opdatering
+
+**GitHub Action – Danmarks Statistik.** `.github/workflows/opdater-dst.yml` kører hver mandag morgen (og kan startes manuelt under fanen *Actions*). Den kører `scripts/opdater_dst.py`, som henter lønindeks, byggeomkostningsindeks og forbrugerpriser fra Statistikbankens åbne API. Scriptet finder selv den nyeste aktive tabel, når Danmarks Statistik skifter basisår, og stopper uden at skrive noget, hvis tal for perioder, der allerede ligger i filerne, afviger fra API'et. Der committes kun, når der er nye tal. Fejl vises som annoteringer på kørslen.
+
+**Ugentlig Claude-opgave – øvrige kilder.** En planlagt opgave i Claude gennemgår hver mandag Marsh, selskabernes regnskaber, Forsikring & Pension, Finanstilsynet og pensionstal, retter datafilerne og skubber ændringerne hertil med en beskrivende commit-besked.
+
+Begge kører `scripts/tjek_data.py` før hver commit. Den fanger rækker med forkert antal felter og tal med komma som decimaltegn.
+
+Nøgletallene på siden viser altid den seneste række i hver fil, så nye perioder kommer frem uden ændringer i `index.html`.
+
 ## Sådan beregnes "Find pensionsselskab"
 
 - **ÅOP:** selskabets billigste markedsrenteprodukt for en typisk kunde (40–55 år, 30–80.000 kr. årligt, 500.000 kr. opsparet). Vælges "tæt på pension", eller kræves en bæredygtig profil, bruges ÅOP 5 år før pension ved den valgte risiko.
