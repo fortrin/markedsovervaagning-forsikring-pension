@@ -85,7 +85,7 @@
       "beskrivelse": "Årlig stigning i det standardberegnede lønindeks for den private sektor (virksomheder og organisationer) og alle sektorer, seneste otte kvartaler. Fra Danmarks Statistik; opdateres automatisk af GitHub Action.",
       "fil": "data/loenindeks.csv",
       "opdateret": "2026-10-27",
-      "af": "Claude, fra Danmarks Statistik",
+      "af": "GitHub Action, fra Danmarks Statistik (SBLON1)",
       "opdateres": "Kvartalsvis (ca. 2 måneder efter kvartalsslut)"
     },
     "byggeomkostninger": {
