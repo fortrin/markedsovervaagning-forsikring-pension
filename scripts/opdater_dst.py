@@ -304,6 +304,15 @@ def check_overlap(name: str, key: str, old: list[dict], new: list[dict]) -> None
         raise Stop(f"{name}: ingen overlappende perioder at kontrollere mod")
 
 
+def annotate(level: str, title: str, message: str) -> None:
+    """Skriv en GitHub Actions-annotering (vises på kørslens oversigtsside)."""
+    import os
+    if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    msg = message.replace("%", "%25").replace("\r", "").replace("\n", "%0A")[:4000]
+    print(f"::{level} title={title}::{msg}")
+
+
 def main() -> int:
     manifest_path = DATA / "datasets.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -317,6 +326,7 @@ def main() -> int:
         except Exception as err:  # noqa: BLE001 – rapportér og fortsæt med de andre kilder
             failed.append(f"{fname}: {err}")
             print(f"FEJL {fname}:\n{err}\n", file=sys.stderr)
+            annotate("error", f"Kunne ikke opdatere {fname}", str(err))
             continue
         # Behold ældre rækker, som API-udtrækket ikke længere dækker, og tilføj nye
         merged = {r[key]: r for r in old}
@@ -328,6 +338,7 @@ def main() -> int:
             manifest["datasets"][ds_id]["af"] = f"GitHub Action, fra Danmarks Statistik ({table})"
             changed.append(f"{fname} ({table}): seneste periode {rows[-1][key]}")
             print(f"Opdateret {fname} fra {table}: {rows[-1]}")
+            annotate("notice", f"Opdateret {fname}", f"Fra {table}, seneste periode {rows[-1][key]}")
         else:
             print(f"Ingen nye tal i {fname} ({table}).")
     if changed:
