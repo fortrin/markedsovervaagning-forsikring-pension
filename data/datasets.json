@@ -82,7 +82,7 @@
     },
     "loenindeks": {
       "titel": "Lønindeks, årlig stigning",
-      "beskrivelse": "Årlig stigning i det standardberegnede lønindeks for den private sektor (virksomheder og organisationer) og alle sektorer, Q4 2024 – Q2 2026. Fra Danmarks Statistik, Nyt om lønindeks.",
+      "beskrivelse": "Årlig stigning i det standardberegnede lønindeks for den private sektor (virksomheder og organisationer) og alle sektorer, seneste otte kvartaler. Fra Danmarks Statistik; opdateres automatisk af GitHub Action.",
       "fil": "data/loenindeks.csv",
       "opdateret": "2026-10-27",
       "af": "Claude, fra Danmarks Statistik",
@@ -90,7 +90,7 @@
     },
     "byggeomkostninger": {
       "titel": "Byggeomkostningsindeks",
-      "beskrivelse": "Byggeomkostningsindeks for boliger i alt, materialer og arbejdsløn (2021 = 100), Q2 2025 – Q2 2026. Fra Danmarks Statistik, Nyt om byggeomkostningsindeks.",
+      "beskrivelse": "Byggeomkostningsindeks for boliger i alt, materialer og arbejdsløn (2021 = 100). Fra Danmarks Statistik; opdateres automatisk af GitHub Action.",
       "fil": "data/byggeomkostninger.csv",
       "opdateret": "2026-10-27",
       "af": "Claude, fra Danmarks Statistik",
@@ -98,7 +98,7 @@
     },
     "forbrugerpriser": {
       "titel": "Forbrugerpriser, årlig stigning",
-      "beskrivelse": "Årlig stigning i forbrugerprisindekset juni–september 2026. Fra Danmarks Statistik, Nyt om forbruger- og nettoprisindeks.",
+      "beskrivelse": "Årlig stigning i forbrugerprisindekset, seneste måneder. Fra Danmarks Statistik; opdateres automatisk af GitHub Action.",
       "fil": "data/forbrugerpriser.csv",
       "opdateret": "2026-10-27",
       "af": "Claude, fra Danmarks Statistik",

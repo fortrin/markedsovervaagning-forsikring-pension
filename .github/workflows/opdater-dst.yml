@@ -1,0 +1,54 @@
+name: Opdater tal fra Danmarks Statistik
+
+# Henter lønindeks, byggeomkostningsindeks og forbrugerpriser fra
+# Danmarks Statistiks API hver mandag og committer kun, hvis der er nye tal.
+on:
+  schedule:
+    - cron: "17 5 * * 1"   # mandag kl. 05:17 UTC (06:17/07:17 dansk tid)
+  workflow_dispatch:        # kan også startes manuelt under fanen Actions
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: opdater-data
+  cancel-in-progress: false
+
+jobs:
+  opdater:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Hent nye tal
+        id: hent
+        run: python3 scripts/opdater_dst.py
+
+      - name: Commit og push, hvis der er ændringer
+        if: always() && steps.hent.outcome != 'cancelled'
+        id: commit
+        run: |
+          if git diff --quiet -- data; then
+            echo "Ingen nye tal."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git commit -m "Opdater tal fra Danmarks Statistik ($(date -u +%Y-%m-%d))"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Genbyg GitHub Pages
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" >/dev/null && echo "Pages-build startet."

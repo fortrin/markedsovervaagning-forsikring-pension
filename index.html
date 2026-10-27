@@ -81,7 +81,7 @@
 <div class="mo">
   <header class="mo-head" id="top">
     <h1>Markedsovervågning – erhvervsforsikring og pension</h1>
-    <p class="mo-lede">Danske selskaber tjener godt på erhverv – Gjensidiges danske erhvervsforretning havde en combined ratio på <b data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</b> i Q3 2026 – men arbejdsskade bliver dyrere efter Højesterets dom, og storm Dave gav <b data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-dk" data-fmt="num0">—</b> stormskader i 1. halvår. I Europa ændrede erhvervspriserne sig <b data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</b> i Q3 2026, og den automatiske indeksregulering følger lønindekset, der steg <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</b> det seneste år.</p>
+    <p class="mo-lede">Danske selskaber tjener godt på erhverv – Gjensidiges danske erhvervsforretning havde en combined ratio på <b data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</b> i <span data-draw="per" data-source="dk_erhverv_puls" data-field="periode" data-where="id=gjensidige-dk-erhverv">—</span> – men arbejdsskade bliver dyrere efter Højesterets dom, og storm Dave gav <b data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-dk" data-fmt="num0">—</b> stormskader i 1. halvår. I Europa ændrede erhvervspriserne sig <b data-draw="val" data-source="marsh_europe" data-field="samlet" data-row="-1" data-fmt="pct0s">—</b> i <span data-draw="per" data-source="marsh_europe" data-field="kvartal" data-row="-1">—</span>, og den automatiske indeksregulering følger lønindekset, der steg <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-row="-1" data-fmt="pct1">—</b> det seneste år.</p>
   </header>
 
   <nav class="mo-tabs" role="tablist" aria-label="Sider">
@@ -98,17 +98,17 @@
     <h2 class="mo-h2" id="danmark">Danmark</h2>
     <div class="mo-tiles" id="nøgletal-dk">
       <div class="mo-tile">
-        <span class="mo-tile-label">Combined ratio, danske skadesselskaber · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2025" data-fmt="pct1">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2024" data-fmt="pct1">—</span></span>
+        <span class="mo-tile-label">Combined ratio, danske skadesselskaber · <span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-row="-1" data-fmt="pct1">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-row="-2" data-fmt="pct1">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Gjensidige, erhverv Danmark · combined ratio Q3 2026</span>
+        <span class="mo-tile-label">Gjensidige, erhverv Danmark · combined ratio <span data-draw="per" data-source="dk_erhverv_puls" data-field="periode" data-where="id=gjensidige-dk-erhverv">—</span></span>
         <span class="mo-big" data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</span>
-        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio_aaret_foer" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</span> · omsætning <span data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1s">—</span></span>
+        <span class="mo-sub">Året før: <span data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio_aaret_foer" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</span> · omsætning <span data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1s">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Alm. Brand, erhvervspræmier · Q2 2026</span>
+        <span class="mo-tile-label">Alm. Brand, erhvervspræmier · <span data-draw="per" data-source="dk_erhverv_puls" data-field="periode" data-where="id=almbrand-erhverv">—</span></span>
         <span class="mo-big" data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=almbrand-erhverv" data-fmt="pct1s">—</span>
         <span class="mo-sub">Privat: <span data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=almbrand-privat" data-fmt="pct1s">—</span></span>
       </div>
@@ -118,43 +118,43 @@
         <span class="mo-sub">Alm. Brand: <span data-draw="val" data-source="dk_arbejdsskade" data-field="hensaettelse_mio" data-where="selskab=Alm. Brand" data-fmt="mio">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Stormskader · 1. halvår 2026</span>
+        <span class="mo-tile-label">Stormskader · <span data-draw="per" data-source="dk_vejrskader" data-field="periode" data-where="id=storm-dk">—</span></span>
         <span class="mo-big" data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-dk" data-fmt="num0">—</span>
         <span class="mo-sub">Heraf Nordjylland: <span data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-nj" data-fmt="num0">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Skybrudsskader · 2025 (ca.)</span>
+        <span class="mo-tile-label">Skybrudsskader · <span data-draw="per" data-source="dk_vejrskader" data-field="periode" data-where="id=skybrud-2025">—</span> (ca.)</span>
         <span class="mo-big" data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=skybrud-2025" data-fmt="num0">—</span>
         <span class="mo-sub">2023: ca. <span data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=skybrud-2023" data-fmt="num0">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Lønindeks, privat sektor · årlig stigning Q2 2026</span>
-        <span class="mo-big" data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
-        <span class="mo-sub">Q2 2025: <span data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2025" data-fmt="pct1">—</span></span>
+        <span class="mo-tile-label">Lønindeks, privat sektor · årlig stigning <span data-draw="per" data-source="loenindeks" data-field="kvartal" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-row="-1" data-fmt="pct1">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="loenindeks" data-field="kvartal" data-row="-5">—</span>: <span data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-row="-5" data-fmt="pct1">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Byggeomkostninger · årlig stigning Q2 2026</span>
-        <span class="mo-big" data-draw="val" data-source="byg_aarlig" data-field="aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
-        <span class="mo-sub">Indeks <span data-draw="val" data-source="byggeomkostninger" data-field="i_alt" data-where="kvartal=Q2 2026" data-fmt="idx1">—</span> (2021 = 100)</span>
+        <span class="mo-tile-label">Byggeomkostninger · årlig stigning <span data-draw="per" data-source="byggeomkostninger" data-field="kvartal" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="byg_aarlig" data-field="aarlig_stigning" data-row="-1" data-fmt="pct1">—</span>
+        <span class="mo-sub">Indeks <span data-draw="val" data-source="byggeomkostninger" data-field="i_alt" data-row="-1" data-fmt="idx1">—</span> (2021 = 100)</span>
       </div>
     </div>
 
     <h2 class="mo-h2" id="europa-globalt">Europa og globalt</h2>
     <div class="mo-tiles" id="nøgletal">
       <div class="mo-tile">
-        <span class="mo-tile-label">Europa, samlet prisændring · Q3 2026</span>
-        <span class="mo-big" data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
-        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
+        <span class="mo-tile-label">Europa, samlet prisændring · <span data-draw="per" data-source="marsh_europe" data-field="kvartal" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="marsh_europe" data-field="samlet" data-row="-1" data-fmt="pct0s">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="marsh_europe" data-field="kvartal" data-row="-5">—</span>: <span data-draw="val" data-source="marsh_europe" data-field="samlet" data-row="-5" data-fmt="pct0s">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Globalt, ejendom · Q3 2026</span>
-        <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ejendom" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
-        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_global" data-field="ejendom" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
+        <span class="mo-tile-label">Globalt, ejendom · <span data-draw="per" data-source="marsh_global" data-field="kvartal" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ejendom" data-row="-1" data-fmt="pct0s">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="marsh_global" data-field="kvartal" data-row="-5">—</span>: <span data-draw="val" data-source="marsh_global" data-field="ejendom" data-row="-5" data-fmt="pct0s">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Globalt, ansvar · Q3 2026</span>
-        <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ansvar" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
-        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_global" data-field="ansvar" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
+        <span class="mo-tile-label">Globalt, ansvar · <span data-draw="per" data-source="marsh_global" data-field="kvartal" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ansvar" data-row="-1" data-fmt="pct0s">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="marsh_global" data-field="kvartal" data-row="-5">—</span>: <span data-draw="val" data-source="marsh_global" data-field="ansvar" data-row="-5" data-fmt="pct0s">—</span></span>
       </div>
     </div>
 
@@ -218,7 +218,7 @@
         </div>
       </div>
       <div class="mo-card" id="storm">
-        <h3>Stormskader 1. halvår 2026</h3>
+        <h3>Stormskader · seneste opgørelse</h3>
         <p class="mo-note">Anmeldte skader, Forsikring & Pension. Storm Dave i april ramte især Nordjylland.</p>
         <div class="mo-chart mo-short" data-draw="ch_storm" data-source="dk_vejrskader"></div>
       </div>
@@ -251,7 +251,7 @@
         <div class="mo-chart" data-draw="ch_europe" data-source="marsh_europe"></div>
       </div>
       <div class="mo-card" id="regioner">
-        <h3>Samlet prisændring pr. region · Q3 2026</h3>
+        <h3>Samlet prisændring pr. region · seneste kvartal</h3>
         <p class="mo-note">Europa fremhævet.</p>
         <div class="mo-chart" data-draw="ch_regions" data-source="marsh_regions"></div>
       </div>
@@ -262,24 +262,24 @@
   <section class="mo-page" id="selskaber" role="tabpanel" aria-labelledby="tab-selskaber" hidden>
     <div class="mo-tiles">
       <div class="mo-tile">
-        <span class="mo-tile-label">Bruttopræmier, danske skadesselskaber · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="bruttopraemier_mio" data-where="aar=2025" data-fmt="mio">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="bruttopraemier_mio" data-where="aar=2024" data-fmt="mio">—</span></span>
+        <span class="mo-tile-label">Bruttopræmier, danske skadesselskaber · <span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="bruttopraemier_mio" data-row="-1" data-fmt="mio">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="dk_skade_sektor" data-field="bruttopraemier_mio" data-row="-2" data-fmt="mio">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Omkostningsprocent · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="omkostningsprocent_netto" data-where="aar=2025" data-fmt="pct1">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="omkostningsprocent_netto" data-where="aar=2024" data-fmt="pct1">—</span></span>
+        <span class="mo-tile-label">Omkostningsprocent · <span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="omkostningsprocent_netto" data-row="-1" data-fmt="pct1">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="dk_skade_sektor" data-field="omkostningsprocent_netto" data-row="-2" data-fmt="pct1">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Solvensdækning (SCR) · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="scr_daekning" data-where="aar=2025" data-fmt="pct0">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="scr_daekning" data-where="aar=2024" data-fmt="pct0">—</span></span>
+        <span class="mo-tile-label">Solvensdækning (SCR) · <span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="scr_daekning" data-row="-1" data-fmt="pct0">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="dk_skade_sektor" data-field="scr_daekning" data-row="-2" data-fmt="pct0">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Egenkapitalforrentning efter skat · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="egenkapitalforrentning_efter_skat" data-where="aar=2025" data-fmt="pct1">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="egenkapitalforrentning_efter_skat" data-where="aar=2024" data-fmt="pct1">—</span></span>
+        <span class="mo-tile-label">Egenkapitalforrentning efter skat · <span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="egenkapitalforrentning_efter_skat" data-row="-1" data-fmt="pct1">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="dk_skade_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="dk_skade_sektor" data-field="egenkapitalforrentning_efter_skat" data-row="-2" data-fmt="pct1">—</span></span>
       </div>
     </div>
 
@@ -342,7 +342,7 @@
         <label>Årspræmie i dag (kr.)
           <input class="mo-premie" type="number" min="0" step="1000" value="100000" inputmode="numeric">
         </label>
-        <p>Med lønindeksets seneste årsstigning på <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</b> stiger præmien med <b data-draw="idx_amount">—</b> til <b data-draw="idx_new">—</b> før eventuelle prisændringer fra selskabet.</p>
+        <p>Med lønindeksets seneste årsstigning på <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-row="-1" data-fmt="pct1">—</b> stiger præmien med <b data-draw="idx_amount">—</b> til <b data-draw="idx_new">—</b> før eventuelle prisændringer fra selskabet.</p>
         <p class="mo-note">Et overslag. Selskaberne bruger ofte et bestemt kvartal (fx februartallet), så den faktiske regulering kan afvige.</p>
       </div>
     </div>
@@ -352,24 +352,24 @@
   <section class="mo-page" id="pension" role="tabpanel" aria-labelledby="tab-pension" hidden>
     <div class="mo-tiles">
       <div class="mo-tile">
-        <span class="mo-tile-label">Afkast, markedsrente · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="afkast_markedsrente" data-where="aar=2025" data-fmt="pct1s">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="afkast_markedsrente" data-where="aar=2024" data-fmt="pct1s">—</span></span>
+        <span class="mo-tile-label">Afkast, markedsrente · <span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="afkast_markedsrente" data-row="-1" data-fmt="pct1s">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="pension_sektor" data-field="afkast_markedsrente" data-row="-2" data-fmt="pct1s">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Afkast, gennemsnitsrente · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="afkast_gennemsnitsrente" data-where="aar=2025" data-fmt="pct1s">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="afkast_gennemsnitsrente" data-where="aar=2024" data-fmt="pct1s">—</span></span>
+        <span class="mo-tile-label">Afkast, gennemsnitsrente · <span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="afkast_gennemsnitsrente" data-row="-1" data-fmt="pct1s">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="pension_sektor" data-field="afkast_gennemsnitsrente" data-row="-2" data-fmt="pct1s">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Omkostninger pr. forsikret · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="omkostninger_pr_forsikret_kr" data-where="aar=2025" data-fmt="kr0">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="omkostninger_pr_forsikret_kr" data-where="aar=2024" data-fmt="kr0">—</span></span>
+        <span class="mo-tile-label">Omkostninger pr. forsikret · <span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="omkostninger_pr_forsikret_kr" data-row="-1" data-fmt="kr0">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="pension_sektor" data-field="omkostninger_pr_forsikret_kr" data-row="-2" data-fmt="kr0">—</span></span>
       </div>
       <div class="mo-tile">
-        <span class="mo-tile-label">Bruttopræmier, liv og pension · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="bruttopraemier_mia" data-where="aar=2025" data-fmt="mia1">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="bruttopraemier_mia" data-where="aar=2024" data-fmt="mia1">—</span></span>
+        <span class="mo-tile-label">Bruttopræmier, liv og pension · <span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-1">—</span></span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="bruttopraemier_mia" data-row="-1" data-fmt="mia1">—</span>
+        <span class="mo-sub"><span data-draw="per" data-source="pension_sektor" data-field="aar" data-row="-2">—</span>: <span data-draw="val" data-source="pension_sektor" data-field="bruttopraemier_mia" data-row="-2" data-fmt="mia1">—</span></span>
       </div>
     </div>
 
@@ -737,16 +737,26 @@
   }
 
   // ----- single values -----
+  const pickRow = (el, rows) => {
+    if (el.dataset.where) {
+      const conds = el.dataset.where.split('&').map((p) => { const i = p.indexOf('='); return [decodeURIComponent(p.slice(0, i)), decodeURIComponent(p.slice(i + 1))]; });
+      return rows.find((row) => conds.every(([k, v]) => String(row[k]) === v));
+    }
+    if (el.dataset.row != null) { const i = Number(el.dataset.row); return rows[i < 0 ? rows.length + i : i]; }
+    return undefined;
+  };
   dash.draw('val', (el) => {
     const d = dash.data(el.dataset.source);
     if (d.status !== 'ok') { el.textContent = '—'; return; }
-    let r;
-    if (el.dataset.where) {
-      const conds = el.dataset.where.split('&').map((p) => { const i = p.indexOf('='); return [decodeURIComponent(p.slice(0, i)), decodeURIComponent(p.slice(i + 1))]; });
-      r = d.data.find((row) => conds.every(([k, v]) => String(row[k]) === v));
-    }
+    const r = pickRow(el, d.data);
     const v = r ? N(r[el.dataset.field]) : null;
     el.textContent = v == null ? '—' : (FMT[el.dataset.fmt] || FMT.pct1)(v);
+  });
+  // Periodeangivelse (fx "Q3 2026") hentet fra samme række som tallet
+  dash.draw('per', (el) => {
+    const d = dash.data(el.dataset.source);
+    const r = d.status === 'ok' ? pickRow(el, d.data) : null;
+    el.textContent = r && r[el.dataset.field] != null && r[el.dataset.field] !== '' ? String(r[el.dataset.field]) : '—';
   });
 
   // ----- overview: events -----
@@ -819,7 +829,7 @@
   });
   dash.draw('ch_storm', (el) => {
     const rows = state(el, 'dk_vejrskader'); if (!rows) return;
-    barH(el, rows.filter((r) => r.type === 'Stormskader'), 'omraade', 'antal', { fmt: FMT.num0, hl: (r) => r.omraade === 'Hele landet', label: 'Stormskader 1. halvår 2026' });
+    barH(el, rows.filter((r) => r.type === 'Stormskader'), 'omraade', 'antal', { fmt: FMT.num0, hl: (r) => r.omraade === 'Hele landet', label: 'Stormskader' });
   });
   dash.draw('satser_body', (tb) => {
     const d = dash.data('dk_satser');
@@ -888,7 +898,7 @@
     barH(el, rows, 'maaned', 'aarlig_stigning', { fmt: FMT.pct1, labFmt: fmtDate, label: 'Forbrugerpriser, årlig stigning' });
   });
   const premie = () => { const i = document.querySelector('.mo-premie'); const v = i ? Number(i.value) : NaN; return isFinite(v) && v >= 0 ? v : null; };
-  const lastWage = () => { const d = dash.data('loenindeks'); if (d.status !== 'ok') return null; const r = d.data.find((x) => x.kvartal === 'Q2 2026'); return r ? N(r.privat_aarlig_stigning) : null; };
+  const lastWage = () => { const d = dash.data('loenindeks'); if (d.status !== 'ok') return null; const r = d.data[d.data.length - 1]; return r ? N(r.privat_aarlig_stigning) : null; };
   dash.draw('idx_amount', (el) => { const p = premie(), w = lastWage(); el.textContent = p == null || w == null ? '—' : f0(Math.round(p * w / 100)) + ' kr.'; });
   dash.draw('idx_new', (el) => { const p = premie(), w = lastWage(); el.textContent = p == null || w == null ? '—' : f0(Math.round(p * (1 + w / 100))) + ' kr.'; });
   document.querySelectorAll('.mo-premie').forEach((i) => i.addEventListener('input', () => { dash.draw('idx_amount'); dash.draw('idx_new'); }));
