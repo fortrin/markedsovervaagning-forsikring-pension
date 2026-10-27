@@ -1,0 +1,22 @@
+produkt,selskab,selskabstype,baeredygtig,lav_risiko,mellem_risiko,hoej_risiko
+AP Basis,AP Pension,Kommerciel,nej,0.40,0.40,0.40
+Velliv Index,Velliv,Kommerciel,nej,0.50,0.50,0.50
+Pædagogernes Pension,Pædagogernes Pension,Arbejdsmarkedspension,nej,,0.52,
+P+,P+,Arbejdsmarkedspension,nej,0.50,0.54,0.58
+P+ Bæredygtig,P+,Arbejdsmarkedspension,ja,0.52,0.56,0.59
+PensionDanmark,PensionDanmark,Arbejdsmarkedspension,nej,0.45,0.59,0.63
+AkademikerPension,AkademikerPension,Arbejdsmarkedspension,nej,0.55,0.60,0.62
+Sampension,Sampension,Arbejdsmarkedspension,nej,0.57,0.65,0.64
+Nordea Pension Mix,Nordea Pension,Kommerciel,nej,0.76,0.73,0.70
+PFA+,PFA,Kommerciel,nej,0.71,0.75,0.80
+PFA Klima+,PFA,Kommerciel,ja,0.71,0.75,0.80
+Industriens Pension,Industriens Pension,Arbejdsmarkedspension,nej,,0.76,
+Velliv Aktiv,Velliv,Kommerciel,nej,0.73,0.81,0.86
+AP Active,AP Pension,Kommerciel,nej,0.75,0.83,0.92
+Danica Ansvarligt Valg,Danica,Kommerciel,ja,0.79,0.89,0.99
+Nordea Formålspension,Nordea Pension,Kommerciel,ja,0.85,0.90,0.96
+Danica Balance,Danica,Kommerciel,nej,0.80,0.90,1.02
+Nordea Profilpension,Nordea Pension,Kommerciel,nej,0.79,0.93,1.04
+AP Omtanke,AP Pension,Kommerciel,ja,0.85,0.93,1.02
+Velliv Aftryk,Velliv,Kommerciel,ja,0.96,0.97,0.99
+AP Select,AP Pension,Kommerciel,nej,,1.11,

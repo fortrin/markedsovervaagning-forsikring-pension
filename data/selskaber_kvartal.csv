@@ -1,0 +1,11 @@
+id,selskab,segment,periode,combined_ratio,combined_ratio_aaret_foer,bemaerkning
+tryg-erhverv,Tryg,Erhverv (koncern),Q3 2026,73.5,73.7,Erhvervsomsætning -0,7 % i lokal valuta; svage fornyelser i dansk erhverv i starten af 2026 og tab af større erhvervskunder. Fastholdelse erhverv 84,9 %.
+tryg-privat,Tryg,Privat (koncern),Q3 2026,78.3,80.8,Prisstigningerne aftager i takt med lavere inflation.
+tryg-dk,Tryg,Danmark i alt,Q3 2026,83.0,81.9,Stigning skyldes primært lavere afløbsresultat.
+tryg-koncern,Tryg,Koncern,Q3 2026,76.8,78.6,Solvens 203 %.
+gjensidige-dk-erhverv,Gjensidige,Erhverv Danmark,Q3 2026,72.0,85.4,Markant forbedring år over år.
+gjensidige-koncern,Gjensidige,Koncern,Q3 2026,73.6,,Forbedring på 6,1 procentpoint.
+if-commercial,If (Sampo),Nordic Commercial (inkl. Topdanmark),Q2 2026,82.9,80.5,Fornyelser og genprisning over skadesinflationen; storm Dave belastede kvartalet.
+if-industrial,If (Sampo),Nordic Industrial,Q2 2026,79.0,80.0,Fortsat pres på genprisning; konkurrence ved 1. januar-fornyelserne.
+if-privat,If (Sampo),Private Nordic (inkl. Topdanmark),Q2 2026,81.7,81.7,
+almbrand-koncern,Alm. Brand,Koncern (forventning helår 2026),Helår 2026,,,Opjusteret forventning: combined ratio 86,5–87,5 (før 88–90). Fuld Q3-rapport 28. oktober 2026.

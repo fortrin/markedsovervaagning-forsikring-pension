@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Markedsovervågning – erhvervsforsikring og pension</title>
+<meta name="description" content="Overblik over priser, selskaber, indeksregulering og pension på det danske erhvervsforsikringsmarked.">
+<link rel="stylesheet" href="css/tema.css">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="js/dash.js"></script>
+</head>
+<body>
+<main id="dash-root">
+<style>
+.mo { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+.mo-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+.mo-lede { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 60rem; line-height: 1.5; }
+.mo .mo-lede b, .mo .mo-calc b { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.mo-tabs { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); }
+.mo-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: var(--cds-pad-sm) var(--cds-pad-md); font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); cursor: pointer; min-height: 44px; }
+.mo-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.mo-page { display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+.mo-page[hidden] { display: none; }
+.mo-h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.mo-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
+.mo-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+.mo-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.mo-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.mo-sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.mo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+.mo-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+.mo-card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.mo-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; line-height: 1.45; }
+.mo-chart { position: relative; min-height: 260px; }
+.mo-chart.mo-short { min-height: 160px; }
+.mo-chart svg { display: block; overflow: visible; }
+.mo-chart text { fill: var(--color-fg-muted); font-family: var(--font-anthropic-sans); }
+.mo-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.mo-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.mo-sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.mo-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; z-index: 2; }
+.mo-tip-head { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.mo-tip-row { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+.mo-fail { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: inherit; height: 100%; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.mo-fail i { width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); display: inline-block; }
+.mo-tablewrap { overflow: auto; max-height: 34rem; }
+.mo-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.mo-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: bottom; }
+.mo-table td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; line-height: 1.4; }
+.mo-table .num { text-align: right; white-space: nowrap; }
+.mo-table th button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; min-height: 28px; }
+.mo-table a { color: var(--color-fg); }
+.mo-wide { min-width: 16rem; }
+.mo-barcell { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.mo-barcell span.b { height: 8px; border-radius: 2px; display: inline-block; }
+.mo-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; font-size: var(--cds-font-size-caption); }
+.mo-controls select, .mo-calc input { font: inherit; font-size: var(--cds-font-size-body); padding: 6px 8px; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-height: 40px; }
+.mo-calc { display: flex; flex-direction: column; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-body); }
+.mo-calc label { display: flex; flex-direction: column; gap: 4px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); max-width: 16rem; }
+.mo-calc p { margin: 0; line-height: 1.5; }
+.mo-sources { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.6; }
+.mo-sources a { color: var(--color-fg-muted); }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+.mo-finder { display: grid; grid-template-columns: minmax(min(100%, 16rem), 18rem) minmax(0, 1fr); gap: var(--cds-gap-md); align-items: start; }
+@media (max-width: 760px) { .mo-finder { grid-template-columns: 1fr; } }
+.mo-col { display: flex; flex-direction: column; gap: var(--cds-gap-md); min-width: 0; }
+.mo-col .mo-card[hidden], .mo-alt[hidden] { display: none; }
+.mo-form label { display: flex; flex-direction: column; gap: 4px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.mo-form select { font: inherit; font-size: var(--cds-font-size-body); padding: 6px 8px; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-height: 40px; }
+.mo-form input[type=range] { width: 100%; min-height: 32px; }
+.mo-range-ends { display: flex; justify-content: space-between; }
+.mo-form .mo-check { flex-direction: row; align-items: center; gap: 8px; color: var(--color-fg); font-size: var(--cds-font-size-body); min-height: 32px; }
+.mo-reset { align-self: flex-start; font: inherit; font-size: var(--cds-font-size-caption); padding: 6px 12px; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); cursor: pointer; min-height: 36px; }
+.mo-alt { margin: 0; line-height: 1.5; }
+.mo-alt b { font-weight: 600; }
+.mo-table tr.mo-top td { font-weight: 600; }
+@media (max-width: 640px) { .mo-hide-narrow { display: none; } }
+</style>
+
+<div class="mo">
+  <header class="mo-head" id="top">
+    <h1>Markedsovervågning – erhvervsforsikring og pension</h1>
+    <p class="mo-lede">Erhvervspriserne i Europa ændrede sig <b data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</b> i Q3 2026, og globalt faldt ejendom <b data-draw="val" data-source="marsh_global" data-field="ejendom" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</b>. Danske skadesforsikringsselskaber havde en combined ratio på <b data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2025" data-fmt="pct1">—</b> i 2025, så selskaberne tjener godt – det giver forhandlingsrum ved fornyelse. Den automatiske indeksregulering følger lønindekset, der steg <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</b> det seneste år.</p>
+  </header>
+
+  <nav class="mo-tabs" role="tablist" aria-label="Sider">
+    <button class="mo-tab" id="tab-overblik" role="tab" data-page="overblik" aria-selected="true">Overblik</button>
+    <button class="mo-tab" id="tab-priser" role="tab" data-page="priser" aria-selected="false">Markedspriser</button>
+    <button class="mo-tab" id="tab-selskaber" role="tab" data-page="selskaber" aria-selected="false">Forsikringsselskaber</button>
+    <button class="mo-tab" id="tab-indeks" role="tab" data-page="indeks" aria-selected="false">Indeksregulering</button>
+    <button class="mo-tab" id="tab-pension" role="tab" data-page="pension" aria-selected="false">Pension</button>
+    <button class="mo-tab" id="tab-find" role="tab" data-page="find-pension" aria-selected="false">Find pensionsselskab</button>
+  </nav>
+
+  <!-- OVERBLIK -->
+  <section class="mo-page" id="overblik" role="tabpanel" aria-labelledby="tab-overblik">
+    <div class="mo-tiles" id="nøgletal">
+      <div class="mo-tile">
+        <span class="mo-tile-label">Europa, samlet prisændring · Q3 2026</span>
+        <span class="mo-big" data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
+        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Globalt, ejendom · Q3 2026</span>
+        <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ejendom" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
+        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_global" data-field="ejendom" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Globalt, ansvar · Q3 2026</span>
+        <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ansvar" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
+        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_global" data-field="ansvar" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Combined ratio, danske skadesselskaber · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2025" data-fmt="pct1">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2024" data-fmt="pct1">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Lønindeks, privat sektor · årlig stigning Q2 2026</span>
+        <span class="mo-big" data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
+        <span class="mo-sub">Q2 2025: <span data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2025" data-fmt="pct1">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Byggeomkostninger · årlig stigning Q2 2026</span>
+        <span class="mo-big" data-draw="val" data-source="byg_aarlig" data-field="aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
+        <span class="mo-sub">Indeks <span data-draw="val" data-source="byggeomkostninger" data-field="i_alt" data-where="kvartal=Q2 2026" data-fmt="idx1">—</span> (2021 = 100)</span>
+      </div>
+    </div>
+
+    <div class="mo-card" id="haendelser">
+      <h3>Markedshændelser at kende før næste fornyelse</h3>
+      <p class="mo-note">Kvartalsregnskaber, prisindeks og domme, der påvirker priser og vilkår for danske erhvervskunder. Nyeste først.</p>
+      <div class="mo-tablewrap">
+        <table class="mo-table" data-source="haendelser" data-row-key="id">
+          <thead><tr>
+            <th data-field="dato">Dato</th>
+            <th data-field="emne">Emne</th>
+            <th data-field="hvad" class="mo-wide">Hvad er sket</th>
+            <th data-field="betydning" class="mo-wide">Betydning for kunderne</th>
+            <th data-field="kilde">Kilde</th>
+          </tr></thead>
+          <tbody data-draw="ev_body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKEDSPRISER -->
+  <section class="mo-page" id="priser" role="tabpanel" aria-labelledby="tab-priser" hidden>
+    <div class="mo-card" id="globale-priser">
+      <h3>Globale prisændringer pr. forretningsområde</h3>
+      <p class="mo-note">Gennemsnitlig ændring i præmierate ved fornyelse i forhold til samme kvartal året før. Marsh Global Insurance Market Index.</p>
+      <div class="mo-chart" data-draw="ch_global" data-source="marsh_global"></div>
+    </div>
+    <div class="mo-grid">
+      <div class="mo-card" id="europa-priser">
+        <h3>Europa</h3>
+        <p class="mo-note">Marsh opgør ikke Norden for sig; Europa er det nærmeste benchmark for danske kunder. Tomme kvartaler er ikke offentliggjort for den pågældende linje.</p>
+        <div class="mo-chart" data-draw="ch_europe" data-source="marsh_europe"></div>
+      </div>
+      <div class="mo-card" id="regioner">
+        <h3>Samlet prisændring pr. region · Q3 2026</h3>
+        <p class="mo-note">Europa fremhævet.</p>
+        <div class="mo-chart" data-draw="ch_regions" data-source="marsh_regions"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORSIKRINGSSELSKABER -->
+  <section class="mo-page" id="selskaber" role="tabpanel" aria-labelledby="tab-selskaber" hidden>
+    <div class="mo-tiles">
+      <div class="mo-tile">
+        <span class="mo-tile-label">Bruttopræmier, danske skadesselskaber · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="bruttopraemier_mio" data-where="aar=2025" data-fmt="mio">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="bruttopraemier_mio" data-where="aar=2024" data-fmt="mio">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Omkostningsprocent · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="omkostningsprocent_netto" data-where="aar=2025" data-fmt="pct1">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="omkostningsprocent_netto" data-where="aar=2024" data-fmt="pct1">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Solvensdækning (SCR) · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="scr_daekning" data-where="aar=2025" data-fmt="pct0">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="scr_daekning" data-where="aar=2024" data-fmt="pct0">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Egenkapitalforrentning efter skat · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="egenkapitalforrentning_efter_skat" data-where="aar=2025" data-fmt="pct1">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="egenkapitalforrentning_efter_skat" data-where="aar=2024" data-fmt="pct1">—</span></span>
+      </div>
+    </div>
+
+    <div class="mo-card" id="kvartal">
+      <h3>Seneste kvartalstal fra selskaberne</h3>
+      <p class="mo-note">Combined ratio = skader og omkostninger i procent af præmien. Under 100 % tjener selskabet på selve forsikringsdriften; jo lavere, jo mere plads til at forhandle prisen ned.</p>
+      <div class="mo-tablewrap">
+        <table class="mo-table" data-source="selskaber_kvartal" data-row-key="id">
+          <thead><tr>
+            <th data-field="selskab">Selskab</th>
+            <th data-field="segment">Segment</th>
+            <th data-field="periode">Periode</th>
+            <th data-field="combined_ratio" class="num">Combined ratio</th>
+            <th data-field="combined_ratio_aaret_foer" class="num">Året før</th>
+            <th data-source="cr_aendring" data-field="aendring" class="num">Ændring, point</th>
+            <th data-field="bemaerkning" class="mo-wide mo-hide-narrow">Bemærkning</th>
+          </tr></thead>
+          <tbody data-draw="ins_body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mo-grid">
+      <div class="mo-card" id="sektor-cr">
+        <h3>Combined ratio og erstatningsprocent, danske skadesselskaber</h3>
+        <p class="mo-note">Netto for genforsikring. Fra 2025 indgår Topdanmark ikke, da selskabet er blevet en del af If's danske filial – det giver et databrud.</p>
+        <div class="mo-chart" data-draw="ch_sektor" data-source="dk_skade_sektor"></div>
+      </div>
+      <div class="mo-card" id="markedsandele">
+        <h3>Største selskaber efter bruttopræmier · 2025</h3>
+        <p class="mo-note">Mio. kr. Kun selskaber under dansk tilsyn – filialer af udenlandske selskaber som If (inkl. Topdanmark) og Gjensidige indgår ikke. Tryg indeholder også norske og svenske filialer.</p>
+        <div class="mo-chart" data-draw="ch_companies" data-source="dk_skade_selskaber"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDEKSREGULERING -->
+  <section class="mo-page" id="indeks" role="tabpanel" aria-labelledby="tab-indeks" hidden>
+    <p class="mo-lede">Mange erhvervspolicer reguleres automatisk én gang om året efter et indeks fra Danmarks Statistik – typisk lønindekset for den private sektor (præmier, summer og selvrisici), mens bygningssummer ofte følger byggeomkostningerne. Hvilket indeks og hvilket tidspunkt, der gælder, står i den enkelte polices betingelser.</p>
+    <div class="mo-grid">
+      <div class="mo-card" id="loen">
+        <h3>Lønindeks, årlig stigning</h3>
+        <p class="mo-note">Standardberegnet timefortjeneste. Fra Q2 2026 indgår fritvalgsbidrag direkte, hvilket kan påvirke sammenligneligheden.</p>
+        <div class="mo-chart" data-draw="ch_loen" data-source="loenindeks"></div>
+      </div>
+      <div class="mo-card" id="byg">
+        <h3>Byggeomkostningsindeks for boliger</h3>
+        <p class="mo-note">Indeks, 2021 = 100.</p>
+        <div class="mo-chart" data-draw="ch_byg" data-source="byggeomkostninger"></div>
+      </div>
+    </div>
+    <div class="mo-grid">
+      <div class="mo-card" id="fpi">
+        <h3>Forbrugerpriser, årlig stigning</h3>
+        <p class="mo-note">Bruges i nogle policer og som pejlemærke for skadesinflation.</p>
+        <div class="mo-chart mo-short" data-draw="ch_fpi" data-source="forbrugerpriser"></div>
+      </div>
+      <div class="mo-card mo-calc" id="beregner" data-source="loenindeks">
+        <h3>Hvad betyder indeksreguleringen for en kunde?</h3>
+        <label>Årspræmie i dag (kr.)
+          <input class="mo-premie" type="number" min="0" step="1000" value="100000" inputmode="numeric">
+        </label>
+        <p>Med lønindeksets seneste årsstigning på <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</b> stiger præmien med <b data-draw="idx_amount">—</b> til <b data-draw="idx_new">—</b> før eventuelle prisændringer fra selskabet.</p>
+        <p class="mo-note">Et overslag. Selskaberne bruger ofte et bestemt kvartal (fx februartallet), så den faktiske regulering kan afvige.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENSION -->
+  <section class="mo-page" id="pension" role="tabpanel" aria-labelledby="tab-pension" hidden>
+    <div class="mo-tiles">
+      <div class="mo-tile">
+        <span class="mo-tile-label">Afkast, markedsrente · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="afkast_markedsrente" data-where="aar=2025" data-fmt="pct1s">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="afkast_markedsrente" data-where="aar=2024" data-fmt="pct1s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Afkast, gennemsnitsrente · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="afkast_gennemsnitsrente" data-where="aar=2025" data-fmt="pct1s">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="afkast_gennemsnitsrente" data-where="aar=2024" data-fmt="pct1s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Omkostninger pr. forsikret · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="omkostninger_pr_forsikret_kr" data-where="aar=2025" data-fmt="kr0">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="omkostninger_pr_forsikret_kr" data-where="aar=2024" data-fmt="kr0">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Bruttopræmier, liv og pension · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="pension_sektor" data-field="bruttopraemier_mia" data-where="aar=2025" data-fmt="mia1">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="pension_sektor" data-field="bruttopraemier_mia" data-where="aar=2024" data-fmt="mia1">—</span></span>
+      </div>
+    </div>
+
+    <div class="mo-card" id="aop">
+      <h3>Årlige omkostninger i procent (ÅOP) pr. pensionsprodukt</h3>
+      <p class="mo-note">Typisk kunde 40–55 år med 30–80.000 kr. i årlig indbetaling og 500.000 kr. i opsparing. Nettoafkast er gennemsnit 2016–2025; tomt felt betyder, at produktet ikke har ti hele år. Afkast i markedsrente og gennemsnitsrente kan ikke sammenlignes direkte. Klik på en kolonne for at sortere.</p>
+      <div class="mo-controls">
+        <label>Selskabstype
+          <select class="mo-f-type" aria-label="Selskabstype">
+            <option value="">Alle</option>
+            <option value="Kommerciel">Kommercielle (firmaaftaler)</option>
+            <option value="Arbejdsmarkedspension">Arbejdsmarkedspension</option>
+          </select>
+        </label>
+        <label>Produktform
+          <select class="mo-f-form" aria-label="Produktform">
+            <option value="">Alle</option>
+            <option value="Markedsrente">Markedsrente</option>
+            <option value="Gennemsnitsrente">Gennemsnitsrente</option>
+          </select>
+        </label>
+      </div>
+      <div class="mo-tablewrap">
+        <table class="mo-table mo-prod" data-source="pension_produkter" data-row-key="produkt">
+          <thead><tr>
+            <th data-field="produkt" data-sort="produkt"><button type="button">Produkt</button></th>
+            <th data-field="selskabstype" class="mo-hide-narrow" data-sort="selskabstype"><button type="button">Type</button></th>
+            <th data-field="form" data-sort="form"><button type="button">Form</button></th>
+            <th data-field="aop" class="num" data-sort="aop" aria-sort="ascending"><button type="button">ÅOP</button></th>
+            <th data-field="nettoafkast_10aar" class="num" data-sort="nettoafkast_10aar"><button type="button">Nettoafkast p.a.</button></th>
+            <th data-field="risikotal" class="num mo-hide-narrow" data-sort="risikotal"><button type="button">Risikotal</button></th>
+          </tr></thead>
+          <tbody data-draw="prod_body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mo-grid">
+      <div class="mo-card" id="pension-afkast">
+        <h3>Sektorens afkast før skat</h3>
+        <p class="mo-note">Livsforsikringsselskaber og tværgående pensionskasser, Finanstilsynet.</p>
+        <div class="mo-chart" data-draw="ch_pension" data-source="pension_sektor"></div>
+      </div>
+      <div class="mo-card" id="aop-risiko">
+        <h3>ÅOP 5 år før pension, efter risiko</h3>
+        <p class="mo-note">Markedsrenteprodukter. Sorteret efter mellem risiko.</p>
+        <div class="mo-tablewrap">
+          <table class="mo-table" data-source="aop_5aar" data-row-key="produkt">
+            <thead><tr>
+              <th data-field="produkt">Produkt</th>
+              <th data-field="lav_risiko" class="num">Lav</th>
+              <th data-field="mellem_risiko" class="num">Mellem</th>
+              <th data-field="hoej_risiko" class="num">Høj</th>
+            </tr></thead>
+            <tbody data-draw="aop5_body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIND PENSIONSSELSKAB -->
+  <section class="mo-page" id="find-pension" role="tabpanel" aria-labelledby="tab-find" hidden>
+    <p class="mo-lede">Vælg kundens branche og hvad der vægter tungest. Værktøjet rangerer de kommercielle pensionsselskaber på omkostninger (ÅOP) og afkast ud fra de indsamlede tal. Det er et udgangspunkt for rådgivningen – ikke en endelig anbefaling.</p>
+    <div class="mo-finder">
+      <div class="mo-card mo-form" id="kriterier">
+        <h3>Kundens profil</h3>
+        <label>Branche
+          <select class="mo-p-branche" data-draw="branche_sel" data-source="brancher" aria-label="Branche"></select>
+        </label>
+        <label>Har virksomheden overenskomst?
+          <select class="mo-p-ok" aria-label="Overenskomst">
+            <option value="ved_ikke">Ved ikke</option>
+            <option value="ja">Ja</option>
+            <option value="nej">Nej</option>
+          </select>
+        </label>
+        <label>Medarbejdernes alder
+          <select class="mo-p-alder" aria-label="Alder">
+            <option value="langt">Typisk 40–55 år</option>
+            <option value="taet">Tæt på pension (5 år)</option>
+          </select>
+        </label>
+        <label>Risikoprofil
+          <select class="mo-p-risiko" aria-label="Risikoprofil">
+            <option value="lav_risiko">Lav</option>
+            <option value="mellem_risiko">Mellem</option>
+            <option value="hoej_risiko">Høj</option>
+          </select>
+        </label>
+        <label>Afkast målt over
+          <select class="mo-p-afkast" aria-label="Afkastperiode">
+            <option value="10aar">10 år (2016–2025)</option>
+            <option value="2025">Seneste år (2025)</option>
+          </select>
+        </label>
+        <label>Hvad vægter tungest?
+          <input class="mo-p-vaegt" type="range" min="0" max="100" step="10" value="50" aria-label="Vægt mellem omkostninger og afkast">
+          <span class="mo-range-ends"><span>Lave omkostninger</span><span>Højt afkast</span></span>
+          <span class="mo-sub" data-draw="vaegt_lbl">—</span>
+        </label>
+        <label class="mo-check"><input class="mo-p-baer" type="checkbox"> Kræv bæredygtig investeringsprofil</label>
+        <label class="mo-check"><input class="mo-p-am" type="checkbox"> Vis arbejdsmarkedspensioner til sammenligning</label>
+        <button type="button" class="mo-reset">Nulstil</button>
+      </div>
+
+      <div class="mo-col">
+        <div class="mo-card" id="overenskomst">
+          <h3>Overenskomst</h3>
+          <p class="mo-alt" data-alt="pligt">Har virksomheden overenskomst på området, skal de omfattede medarbejdere typisk have pension i <b data-draw="branche_udbyder" data-source="brancher">—</b>. Ranglisten nedenfor gælder funktionærer og andre uden for overenskomsten.</p>
+          <p class="mo-alt" data-alt="fri" hidden>Der er ingen fast overenskomstpension i den valgte situation – virksomheden kan frit vælge en firmapensionsaftale.</p>
+          <p class="mo-alt" data-alt="tjek" hidden>Pensionsselskabet afhænger af den konkrete overenskomst – tjek aftalen, før der vælges firmapension.</p>
+          <p class="mo-note" data-draw="branche_note" data-source="brancher">—</p>
+        </div>
+
+        <div class="mo-card" id="anbefaling" data-source="pension_selskaber pension_produkter aop_5aar">
+          <h3>Umiddelbart bedst</h3>
+          <p class="mo-lede">Ud fra kriterierne ligger <b data-draw="rank_n" data-n="1">—</b> øverst med <b data-draw="rank_score">—</b> point ud af 100, efterfulgt af <b data-draw="rank_n" data-n="2">—</b> og <b data-draw="rank_n" data-n="3">—</b>.</p>
+          <div class="mo-tablewrap">
+            <table class="mo-table">
+              <thead><tr>
+                <th class="num">Nr.</th>
+                <th>Selskab</th>
+                <th>Produkt brugt</th>
+                <th class="num">ÅOP</th>
+                <th class="num">Afkast p.a.</th>
+                <th class="num">Score</th>
+                <th class="mo-wide mo-hide-narrow">Bemærkning</th>
+              </tr></thead>
+              <tbody data-draw="rank_body"></tbody>
+            </table>
+          </div>
+          <p class="mo-note">Score: det bedste selskab på hvert parameter får 100 point og det dårligste 0; de to vægtes efter dit valg. ÅOP er selskabets billigste markedsrenteprodukt for en typisk kunde (40–55 år), eller ved valgt risiko 5 år før pension. Kræves bæredygtig profil, bruges den bæredygtige profils ÅOP 5 år før pension. Afkast er for en kunde 20 år før pension ved middel risiko (2025 er januar–november). Norli er udeladt, da der kun er tal for gennemsnitsrente. Tjek også forsikringsdækninger og rådgivning, som ikke indgår her.</p>
+        </div>
+
+        <div class="mo-card" id="am-sammenligning" hidden>
+          <h3>Arbejdsmarkedspensioner til sammenligning</h3>
+          <p class="mo-note">Kan som regel kun vælges via overenskomst eller medlemskab. Afkast er branchestatistikkens gennemsnit 2016–2025 og kan ikke sammenlignes direkte med tallene ovenfor.</p>
+          <div class="mo-tablewrap" data-source="pension_produkter aop_5aar brancher">
+            <table class="mo-table">
+              <thead><tr>
+                <th>Selskab</th>
+                <th>Produkt</th>
+                <th class="num">ÅOP</th>
+                <th class="num">Nettoafkast p.a.</th>
+              </tr></thead>
+              <tbody data-draw="am_body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mo-sources" id="kilder">
+    Kilder: Marsh Global Insurance Market Index (kvartalsvise pressemeddelelser), Finanstilsynet (Sektoren i tal 2025 for skadesforsikring samt liv og pension), Danmarks Statistik (lønindeks, byggeomkostningsindeks, forbrugerprisindeks), selskabernes kvartalsmeddelelser, branchestatistikken for pensionsprodukter (via sammenligner.dk) og Analysehuset Nikolaj Holdt Mikkelsen (via Faglig Senior). Alle tal er indsamlet manuelt og opdateres, når nye tal udkommer – se datakilderne nedenfor.
+  </footer>
+  <details class="mo-sources" id="datakilder">
+    <summary>Datakilder og opdateringsdatoer</summary>
+    <ul id="kildeliste"></ul>
+  </details>
+</div>
+
+<script>
+(() => {
+  const L = d3.formatLocale({ decimal: ',', thousands: '.', grouping: [3], currency: ['', ' kr.'] });
+  const f0 = L.format(',.0f'), f1 = L.format(',.1f'), f2 = L.format(',.2f');
+  const N = (v) => (v === '' || v == null || isNaN(Number(v))) ? null : Number(v);
+  const sgn = (v, f) => (v > 0 ? '+' : v < 0 ? '-' : '') + f(Math.abs(v));
+  const FMT = {
+    pct0s: (v) => sgn(v, f0) + ' %',
+    pct1s: (v) => sgn(v, f1) + ' %',
+    pct0: (v) => f0(v) + ' %',
+    pct1: (v) => f1(v) + ' %',
+    pct2: (v) => f2(v) + ' %',
+    kr0: (v) => f0(v) + ' kr.',
+    mio: (v) => f0(v) + ' mio. kr.',
+    mia1: (v) => f1(v) + ' mia. kr.',
+    idx1: (v) => f1(v),
+    num0: (v) => f0(v),
+  };
+  const MONTHS = ['jan.', 'feb.', 'mar.', 'apr.', 'maj', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'dec.'];
+  const fmtDate = (s) => {
+    const p = String(s).split('-');
+    if (p.length === 3) return `${+p[2]}. ${MONTHS[+p[1] - 1]} ${p[0]}`;
+    if (p.length === 2) return `${MONTHS[+p[1] - 1]} ${p[0]}`;
+    return String(s);
+  };
+  const COL = (i) => dash.colors[i % dash.colors.length];
+
+  // ----- calculations -----
+  dash.calc('byg_aarlig', {
+    inputs: ['byggeomkostninger'],
+    title: 'Byggeomkostninger, årlig stigning',
+    description: 'Ændring i byggeomkostningsindekset i forhold til samme kvartal året før, i procent.',
+    fn: (byggeomkostninger) => byggeomkostninger.flatMap((r) => {
+      const [q, y] = r.kvartal.split(' ');
+      const prev = byggeomkostninger.find((p) => p.kvartal === `${q} ${Number(y) - 1}`);
+      return prev ? [{ kvartal: r.kvartal, aarlig_stigning: Math.round((Number(r.i_alt) / Number(prev.i_alt) - 1) * 1000) / 10 }] : [];
+    }),
+  });
+  dash.calc('cr_aendring', {
+    inputs: ['selskaber_kvartal'],
+    title: 'Ændring i combined ratio',
+    description: 'Combined ratio minus samme periode året før, i procentpoint.',
+    fn: (selskaber_kvartal) => selskaber_kvartal.map((r) => ({
+      id: r.id,
+      aendring: (r.combined_ratio === '' || r.combined_ratio_aaret_foer === '') ? null : Math.round((Number(r.combined_ratio) - Number(r.combined_ratio_aaret_foer)) * 10) / 10,
+    })),
+  });
+
+  // ----- helpers -----
+  const state = (el, id) => {
+    const d = dash.data(id);
+    el.classList.toggle('dash-skeleton', d.status === 'loading');
+    if (d.status === 'ok') return d.data;
+    el.replaceChildren();
+    if (d.status === 'error' || d.status === 'connect' || d.status === 'declined' || d.status === 'missing') {
+      const m = document.createElement('div'); m.className = 'mo-fail';
+      const dot = document.createElement('i'); const t = document.createElement('span'); t.textContent = 'Failed to load';
+      m.append(dot, t); el.append(m);
+    }
+    return null;
+  };
+
+  const tipBox = (el) => {
+    const t = document.createElement('div'); t.className = 'mo-tip'; t.hidden = true; el.append(t); return t;
+  };
+  const fillTip = (tip, head, lines) => {
+    tip.replaceChildren();
+    const h = document.createElement('div'); h.className = 'mo-tip-head'; h.textContent = head; tip.append(h);
+    lines.forEach((l) => {
+      const r = document.createElement('div'); r.className = 'mo-tip-row';
+      if (l.color) { const s = document.createElement('span'); s.className = 'mo-sw'; s.style.background = l.color; r.append(s); }
+      const n = document.createElement('span'); n.textContent = l.label ? `${l.label}: ${l.value}` : l.value; r.append(n);
+      tip.append(r);
+    });
+    tip.hidden = false;
+  };
+  const placeTip = (el, tip, x, y) => {
+    const W = el.clientWidth, tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = x + 14; if (left + tw > W) left = Math.max(0, x - tw - 14);
+    let top = Math.max(0, Math.min(y - th / 2, el.clientHeight - th));
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  };
+  const measure = (svg, texts) => {
+    const g = svg.append('g');
+    const w = d3.max(texts, (t) => g.append('text').attr('font-size', 11).text(t).node().getComputedTextLength()) || 0;
+    g.remove(); return w;
+  };
+
+  function lineChart(el, rows, xKey, series, o = {}) {
+    el.replaceChildren();
+    const W = Math.max(260, el.clientWidth), H = o.h || 260;
+    const fmt = o.fmt || FMT.pct0s, tickFmt = o.tickFmt || fmt;
+    const xs = rows.map((r) => String(r[xKey]));
+    const xLab = o.xFmt || ((s) => s);
+    series.forEach((s, i) => { s.c = s.color || COL(i); });
+    const vals = [];
+    series.forEach((s) => rows.forEach((r) => { const v = N(r[s.key]); if (v != null) vals.push(v); }));
+    let lo = d3.min(vals), hi = d3.max(vals);
+    if (o.zero) { lo = Math.min(0, lo); hi = Math.max(0, hi); }
+    const pad = (hi - lo) * 0.1 || 1;
+    const y = d3.scaleLinear([lo - (o.zero && lo === 0 ? 0 : pad), hi + (o.zero && hi === 0 ? 0 : pad)], [H - 26, 10]).nice(5);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', o.label || '');
+    const ticks = y.ticks(5);
+    const left = measure(svg, ticks.map(tickFmt)) + 10;
+    const lastOf = (s) => { for (let i = rows.length - 1; i >= 0; i--) { const v = N(rows[i][s.key]); if (v != null) return { i, v }; } return null; };
+    const endTxt = series.map((s) => { const l = lastOf(s); return l ? `${s.label} ${fmt(l.v)}` : s.label; });
+    let right = measure(svg, endTxt) + 14;
+    const useEnd = right < W * 0.38;
+    if (!useEnd) right = 14;
+    const x = d3.scalePoint(xs, [left, W - right]).padding(0.15);
+
+    svg.append('g').selectAll('line').data(ticks).join('line')
+      .attr('x1', left).attr('x2', W - right).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+      .attr('stroke', (d) => d === 0 ? 'var(--cds-chart-reference)' : 'var(--cds-chart-grid)').attr('stroke-width', 1);
+    svg.append('g').selectAll('text').data(ticks).join('text')
+      .attr('x', left - 8).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).text(tickFmt);
+    const step = Math.max(1, Math.ceil(xs.length * 64 / Math.max(1, W - left - right)));
+    svg.append('g').selectAll('text').data(xs.filter((_, i) => i % step === 0 || i === xs.length - 1)).join('text')
+      .attr('x', (d) => x(d)).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).text(xLab);
+
+    const line = (s) => d3.line().defined((r) => N(r[s.key]) != null).x((r) => x(String(r[xKey]))).y((r) => y(N(r[s.key])));
+    series.forEach((s) => {
+      svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', 2)
+        .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', line(s));
+      svg.append('g').selectAll('circle').data(rows.filter((r) => N(r[s.key]) != null)).join('circle')
+        .attr('cx', (r) => x(String(r[xKey]))).attr('cy', (r) => y(N(r[s.key]))).attr('r', 3).attr('fill', s.c);
+    });
+
+    if (useEnd) {
+      const labs = series.map((s, i) => { const l = lastOf(s); return l ? { s, t: endTxt[i], x: x(xs[l.i]), y: y(l.v) } : null; }).filter(Boolean)
+        .sort((a, b) => a.y - b.y);
+      for (let i = 1; i < labs.length; i++) if (labs[i].y - labs[i - 1].y < 13) labs[i].y = labs[i - 1].y + 13;
+      const over = labs.length ? labs[labs.length - 1].y - (H - 30) : 0;
+      if (over > 0) labs.forEach((l) => { l.y -= over; });
+      svg.append('g').selectAll('text').data(labs).join('text')
+        .attr('x', W - right + 8).attr('y', (d) => d.y).attr('dy', '0.32em').attr('font-size', 11)
+        .style('fill', (d) => d.s.c).text((d) => d.t);
+    } else {
+      const lg = document.createElement('div'); lg.className = 'mo-legend';
+      series.forEach((s) => { const sp = document.createElement('span'); const sw = document.createElement('i'); sw.className = 'mo-sw'; sw.style.background = s.c; sp.append(sw, document.createTextNode(s.label)); lg.append(sp); });
+      el.append(lg);
+    }
+
+    const tip = tipBox(el);
+    const rule = svg.append('line').attr('y1', 10).attr('y2', H - 26).attr('stroke', 'var(--cds-chart-axis)').attr('stroke-width', 1).style('opacity', 0);
+    svg.append('rect').attr('x', left).attr('y', 0).attr('width', Math.max(1, W - left - right)).attr('height', H - 20).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx, my] = d3.pointer(ev);
+        let bi = 0, bd = Infinity; xs.forEach((k, i) => { const d = Math.abs(x(k) - mx); if (d < bd) { bd = d; bi = i; } });
+        const px = x(xs[bi]); rule.attr('x1', px).attr('x2', px).style('opacity', 1);
+        fillTip(tip, xLab(xs[bi]), series.map((s) => { const v = N(rows[bi][s.key]); return { color: series.length > 1 ? s.c : null, label: series.length > 1 ? s.label : '', value: v == null ? 'ikke opgjort' : fmt(v) }; }));
+        placeTip(el, tip, px, my);
+      })
+      .on('pointerleave', () => { tip.hidden = true; rule.style('opacity', 0); });
+  }
+
+  function barH(el, rows, labKey, valKey, o = {}) {
+    el.replaceChildren();
+    const W = Math.max(260, el.clientWidth), rh = 26, H = rows.length * rh + 8;
+    const fmt = o.fmt || FMT.pct0s, labF = o.labFmt || ((s) => s);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', o.label || '');
+    const left = measure(svg, rows.map((r) => labF(r[labKey]))) + 12;
+    const vw = measure(svg, rows.map((r) => fmt(N(r[valKey])))) + 8;
+    const vs = rows.map((r) => N(r[valKey]));
+    const lo = Math.min(0, d3.min(vs)), hi = Math.max(0, d3.max(vs));
+    const x = d3.scaleLinear([lo, hi], [left + (lo < 0 ? vw : 0), W - (hi > 0 ? vw : 4)]);
+    const yb = d3.scaleBand(rows.map((r) => String(r[labKey])), [4, H - 4]).padding(0.25);
+    const color = (r) => o.hl ? (o.hl(r) ? COL(0) : 'var(--cds-chart-muted)') : COL(0);
+    svg.append('g').selectAll('text').data(rows).join('text')
+      .attr('x', left - 8).attr('y', (r) => yb(String(r[labKey])) + yb.bandwidth() / 2).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11)
+      .text((r) => labF(r[labKey]));
+    const tip = tipBox(el);
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', (r) => Math.min(x(0), x(N(r[valKey])))).attr('width', (r) => Math.max(1, Math.abs(x(N(r[valKey])) - x(0))))
+      .attr('y', (r) => yb(String(r[labKey]))).attr('height', yb.bandwidth()).attr('rx', 3).style('fill', color)
+      .on('pointermove', (ev, r) => { const [mx, my] = d3.pointer(ev, el); fillTip(tip, labF(r[labKey]), [{ value: fmt(N(r[valKey])) }]); placeTip(el, tip, mx, my); })
+      .on('pointerleave', () => { tip.hidden = true; });
+    svg.append('g').selectAll('text').data(rows).join('text')
+      .attr('x', (r) => { const v = N(r[valKey]); return v < 0 ? x(v) - 6 : x(v) + 6; })
+      .attr('text-anchor', (r) => N(r[valKey]) < 0 ? 'end' : 'start')
+      .attr('y', (r) => yb(String(r[labKey])) + yb.bandwidth() / 2).attr('dy', '0.32em').attr('font-size', 11).style('fill', 'var(--color-fg)')
+      .text((r) => fmt(N(r[valKey])));
+    svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 0).attr('y2', H).attr('stroke', 'var(--cds-chart-axis)');
+  }
+
+  const cell = (tr, text, cls) => { const td = document.createElement('td'); if (cls) td.className = cls; td.textContent = text; tr.append(td); return td; };
+  const dash_ = (v, f) => v == null ? '–' : f(v);
+
+  // ----- tabs -----
+  const tabs = [...document.querySelectorAll('.mo-tab')];
+  const show = (name) => {
+    document.querySelectorAll('.mo-page').forEach((s) => { s.hidden = s.id !== name; });
+    tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.page === name)));
+  };
+  tabs.forEach((t) => t.addEventListener('click', () => { show(t.dataset.page); dash.setLink(t.dataset.page); }));
+  const hash = decodeURIComponent(location.hash.slice(1));
+  const target = hash && document.getElementById(hash);
+  if (target) {
+    const page = target.closest('.mo-page');
+    if (page) show(page.id);
+    requestAnimationFrame(() => target.scrollIntoView());
+  }
+
+  // ----- single values -----
+  dash.draw('val', (el) => {
+    const d = dash.data(el.dataset.source);
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    let r;
+    if (el.dataset.where) {
+      const conds = el.dataset.where.split('&').map((p) => { const i = p.indexOf('='); return [decodeURIComponent(p.slice(0, i)), decodeURIComponent(p.slice(i + 1))]; });
+      r = d.data.find((row) => conds.every(([k, v]) => String(row[k]) === v));
+    }
+    const v = r ? N(r[el.dataset.field]) : null;
+    el.textContent = v == null ? '—' : (FMT[el.dataset.fmt] || FMT.pct1)(v);
+  });
+
+  // ----- overview: events -----
+  dash.draw('ev_body', (tb) => {
+    const d = dash.data('haendelser');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    [...d.data].sort((a, b) => String(b.dato).localeCompare(String(a.dato))).forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.id;
+      cell(tr, fmtDate(r.dato), 'num'); cell(tr, r.emne); cell(tr, r.hvad); cell(tr, r.betydning);
+      const td = document.createElement('td');
+      if (r.url && /^https:\/\//.test(r.url)) { const a = document.createElement('a'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.kilde; td.append(a); } else td.textContent = r.kilde;
+      tr.append(td); tb.append(tr);
+    });
+  });
+
+  // ----- market prices -----
+  dash.draw('ch_global', (el) => {
+    const rows = state(el, 'marsh_global'); if (!rows) return;
+    lineChart(el, rows, 'kvartal', [
+      { key: 'samlet', label: 'Samlet', color: 'var(--color-fg)' },
+      { key: 'ejendom', label: 'Ejendom' },
+      { key: 'ansvar', label: 'Ansvar' },
+      { key: 'finansielle_og_professionelle', label: 'Finansielle og professionelle' },
+      { key: 'cyber', label: 'Cyber' },
+    ], { zero: true, h: 300, label: 'Globale prisændringer pr. forretningsområde' });
+  });
+  dash.draw('ch_europe', (el) => {
+    const rows = state(el, 'marsh_europe'); if (!rows) return;
+    lineChart(el, rows, 'kvartal', [
+      { key: 'samlet', label: 'Samlet', color: 'var(--color-fg)' },
+      { key: 'ejendom', label: 'Ejendom', color: COL(0) },
+      { key: 'cyber', label: 'Cyber', color: COL(3) },
+    ], { zero: true, label: 'Prisændringer i Europa' });
+  });
+  dash.draw('ch_regions', (el) => {
+    const rows = state(el, 'marsh_regions'); if (!rows) return;
+    barH(el, [...rows].sort((a, b) => N(a.samlet) - N(b.samlet)), 'region', 'samlet', { hl: (r) => r.region === 'Europa', label: 'Samlet prisændring pr. region' });
+  });
+
+  // ----- insurers -----
+  dash.draw('ins_body', (tb) => {
+    const d = dash.data('selskaber_kvartal'), c = dash.data('cr_aendring');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const ch = new Map((c.status === 'ok' ? c.data : []).map((r) => [r.id, r.aendring]));
+    d.data.forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.id;
+      cell(tr, r.selskab); cell(tr, r.segment); cell(tr, r.periode);
+      cell(tr, dash_(N(r.combined_ratio), FMT.pct1), 'num');
+      cell(tr, dash_(N(r.combined_ratio_aaret_foer), FMT.pct1), 'num');
+      const a = ch.get(r.id);
+      const td = cell(tr, a == null ? '–' : sgn(a, f1), 'num');
+      if (a != null && a !== 0) td.style.color = a < 0 ? 'var(--color-ok)' : 'var(--color-bad)';
+      cell(tr, r.bemaerkning || '', 'mo-hide-narrow');
+      tb.append(tr);
+    });
+  });
+  dash.draw('ch_sektor', (el) => {
+    const rows = state(el, 'dk_skade_sektor'); if (!rows) return;
+    lineChart(el, rows, 'aar', [
+      { key: 'combined_ratio_netto', label: 'Combined ratio' },
+      { key: 'erstatningsprocent_netto', label: 'Erstatningsprocent' },
+    ], { fmt: FMT.pct1, tickFmt: FMT.pct0, label: 'Combined ratio og erstatningsprocent' });
+  });
+  dash.draw('ch_companies', (el) => {
+    const rows = state(el, 'dk_skade_selskaber'); if (!rows) return;
+    barH(el, [...rows].sort((a, b) => N(b.bruttopraemier_mio) - N(a.bruttopraemier_mio)), 'selskab', 'bruttopraemier_mio', { fmt: FMT.num0, label: 'Bruttopræmier pr. selskab' });
+  });
+
+  // ----- indexation -----
+  dash.draw('ch_loen', (el) => {
+    const rows = state(el, 'loenindeks'); if (!rows) return;
+    lineChart(el, rows, 'kvartal', [
+      { key: 'privat_aarlig_stigning', label: 'Privat sektor' },
+      { key: 'alle_sektorer_aarlig_stigning', label: 'Alle sektorer', color: 'var(--cds-chart-muted)' },
+    ], { fmt: FMT.pct1, tickFmt: FMT.pct1, zero: true, label: 'Lønindeks, årlig stigning' });
+  });
+  dash.draw('ch_byg', (el) => {
+    const rows = state(el, 'byggeomkostninger'); if (!rows) return;
+    lineChart(el, rows, 'kvartal', [
+      { key: 'i_alt', label: 'I alt', color: 'var(--color-fg)' },
+      { key: 'materialer', label: 'Materialer' },
+      { key: 'arbejdsloen', label: 'Arbejdsløn' },
+    ], { fmt: FMT.idx1, tickFmt: FMT.num0, label: 'Byggeomkostningsindeks' });
+  });
+  dash.draw('ch_fpi', (el) => {
+    const rows = state(el, 'forbrugerpriser'); if (!rows) return;
+    barH(el, rows, 'maaned', 'aarlig_stigning', { fmt: FMT.pct1, labFmt: fmtDate, label: 'Forbrugerpriser, årlig stigning' });
+  });
+  const premie = () => { const i = document.querySelector('.mo-premie'); const v = i ? Number(i.value) : NaN; return isFinite(v) && v >= 0 ? v : null; };
+  const lastWage = () => { const d = dash.data('loenindeks'); if (d.status !== 'ok') return null; const r = d.data.find((x) => x.kvartal === 'Q2 2026'); return r ? N(r.privat_aarlig_stigning) : null; };
+  dash.draw('idx_amount', (el) => { const p = premie(), w = lastWage(); el.textContent = p == null || w == null ? '—' : f0(Math.round(p * w / 100)) + ' kr.'; });
+  dash.draw('idx_new', (el) => { const p = premie(), w = lastWage(); el.textContent = p == null || w == null ? '—' : f0(Math.round(p * (1 + w / 100))) + ' kr.'; });
+  document.querySelectorAll('.mo-premie').forEach((i) => i.addEventListener('input', () => { dash.draw('idx_amount'); dash.draw('idx_new'); }));
+
+  // ----- pension -----
+  let sortKey = 'aop', sortDir = 1;
+  const numCols = new Set(['aop', 'nettoafkast_10aar', 'risikotal']);
+  document.querySelectorAll('.mo-prod th[data-sort] button').forEach((b) => b.addEventListener('click', () => {
+    const k = b.parentElement.dataset.sort;
+    if (k === sortKey) sortDir = -sortDir; else { sortKey = k; sortDir = 1; }
+    document.querySelectorAll('.mo-prod th[data-sort]').forEach((th) => {
+      if (th.dataset.sort === sortKey) th.setAttribute('aria-sort', sortDir > 0 ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort');
+    });
+    dash.draw('prod_body');
+  }));
+  document.querySelectorAll('.mo-f-type, .mo-f-form').forEach((s) => s.addEventListener('change', () => dash.draw('prod_body')));
+  dash.draw('prod_body', (tb) => {
+    const d = dash.data('pension_produkter');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const ft = document.querySelector('.mo-f-type')?.value || '', ff = document.querySelector('.mo-f-form')?.value || '';
+    const maxA = d3.max(d.data, (r) => N(r.aop)) || 1;
+    const rows = d.data.filter((r) => (!ft || r.selskabstype === ft) && (!ff || r.form === ff));
+    rows.sort((a, b) => {
+      if (numCols.has(sortKey)) {
+        const va = N(a[sortKey]), vb = N(b[sortKey]);
+        if (va == null && vb == null) return 0; if (va == null) return 1; if (vb == null) return -1;
+        return (va - vb) * sortDir;
+      }
+      return String(a[sortKey]).localeCompare(String(b[sortKey]), 'da') * sortDir;
+    });
+    rows.forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.produkt;
+      cell(tr, r.produkt); cell(tr, r.selskabstype, 'mo-hide-narrow'); cell(tr, r.form);
+      const td = document.createElement('td'); td.className = 'num';
+      const wrap = document.createElement('div'); wrap.className = 'mo-barcell';
+      const bar = document.createElement('span'); bar.className = 'b';
+      bar.style.width = Math.round(48 * N(r.aop) / maxA) + 'px';
+      bar.style.background = r.selskabstype === 'Kommerciel' ? COL(0) : 'var(--cds-chart-muted)';
+      const t = document.createElement('span'); t.textContent = FMT.pct2(N(r.aop));
+      wrap.append(bar, t); td.append(wrap); tr.append(td);
+      cell(tr, dash_(N(r.nettoafkast_10aar), FMT.pct2), 'num');
+      cell(tr, dash_(N(r.risikotal), f1), 'num mo-hide-narrow');
+      tb.append(tr);
+    });
+  });
+  dash.draw('ch_pension', (el) => {
+    const rows = state(el, 'pension_sektor'); if (!rows) return;
+    lineChart(el, rows, 'aar', [
+      { key: 'afkast_markedsrente', label: 'Markedsrente' },
+      { key: 'afkast_gennemsnitsrente', label: 'Gennemsnitsrente' },
+    ], { fmt: FMT.pct1s, tickFmt: FMT.pct0s, zero: true, label: 'Sektorens afkast' });
+  });
+  dash.draw('aop5_body', (tb) => {
+    const d = dash.data('aop_5aar');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    [...d.data].sort((a, b) => N(a.mellem_risiko) - N(b.mellem_risiko)).forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.produkt;
+      cell(tr, r.produkt);
+      ['lav_risiko', 'mellem_risiko', 'hoej_risiko'].forEach((k) => cell(tr, dash_(N(r[k]), FMT.pct2), 'num'));
+      tb.append(tr);
+    });
+  });
+
+  // ----- find pension company -----
+  const P = () => dash.params();
+  const ctl = (sel, ev, fn) => document.querySelectorAll(sel).forEach((el) => el.addEventListener(ev, () => fn(el)));
+  ctl('.mo-p-ok', 'change', (el) => dash.setParams({ overenskomst: el.value }));
+  ctl('.mo-p-alder', 'change', (el) => dash.setParams({ alder: el.value }));
+  ctl('.mo-p-risiko', 'change', (el) => dash.setParams({ risiko: el.value }));
+  ctl('.mo-p-afkast', 'change', (el) => dash.setParams({ afkast: el.value }));
+  ctl('.mo-p-vaegt', 'input', (el) => dash.setParams({ vaegt: Number(el.value) }));
+  ctl('.mo-p-baer', 'change', (el) => dash.setParams({ baeredygtig: el.checked }));
+  ctl('.mo-p-am', 'change', (el) => dash.setParams({ vis_am: el.checked }));
+  ctl('.mo-reset', 'click', () => dash.resetParams());
+
+  const brancheRow = () => {
+    const d = dash.data('brancher');
+    return d.status === 'ok' ? d.data.find((r) => r.branche === P().branche) || null : null;
+  };
+  dash.onData(() => {
+    const p = P();
+    const setVal = (sel, v) => document.querySelectorAll(sel).forEach((el) => { if (el !== document.activeElement && v != null) el.value = String(v); });
+    setVal('.mo-p-ok', p.overenskomst); setVal('.mo-p-alder', p.alder); setVal('.mo-p-risiko', p.risiko); setVal('.mo-p-afkast', p.afkast);
+    document.querySelectorAll('.mo-p-vaegt').forEach((el) => { if (el !== document.activeElement) el.value = String(p.vaegt ?? 50); });
+    document.querySelectorAll('.mo-p-baer').forEach((el) => { el.checked = !!p.baeredygtig; });
+    document.querySelectorAll('.mo-p-am').forEach((el) => { el.checked = !!p.vis_am; });
+    document.querySelectorAll('#am-sammenligning').forEach((el) => { el.hidden = !p.vis_am; });
+    const r = brancheRow();
+    const prov = r ? r.overenskomst_udbyder : 'Firmaaftale';
+    const alt = (prov === 'Firmaaftale' || p.overenskomst === 'nej') ? 'fri' : prov === 'Afhænger af overenskomst' ? 'tjek' : 'pligt';
+    document.querySelectorAll('.mo-alt').forEach((el) => { el.hidden = el.dataset.alt !== alt; });
+  });
+
+  dash.draw('branche_sel', (sel) => {
+    const d = dash.data('brancher');
+    sel.replaceChildren(...(d.status === 'ok' ? d.data : []).map((r) => new Option(r.branche, r.branche)));
+    sel.value = P().branche ?? '';
+    sel.onchange = () => dash.setParams({ branche: sel.value });
+  });
+  dash.draw('branche_udbyder', (el) => { const r = brancheRow(); el.textContent = r ? r.overenskomst_udbyder : '—'; });
+  dash.draw('branche_note', (el) => { const r = brancheRow(); el.textContent = r ? r.bemaerkning : '—'; });
+  dash.draw('vaegt_lbl', (el) => { const w = Number(P().vaegt ?? 50); el.textContent = `${100 - w} % omkostninger · ${w} % afkast`; });
+
+  const rankData = () => {
+    const s = dash.data('pension_selskaber'), pr = dash.data('pension_produkter'), a = dash.data('aop_5aar');
+    if ([s, pr, a].some((d) => d.status !== 'ok')) return null;
+    const p = P();
+    const near = p.alder === 'taet', baer = !!p.baeredygtig;
+    const risk = ['lav_risiko', 'mellem_risiko', 'hoej_risiko'].includes(p.risiko) ? p.risiko : 'mellem_risiko';
+    const akey = p.afkast === '2025' ? 'afkast_2025_jan_nov' : 'afkast_10aar_pa';
+    const w = Math.max(0, Math.min(100, Number(p.vaegt ?? 50))) / 100;
+    const rows = s.data.filter((r) => r.selskabstype === 'Kommerciel').map((r) => {
+      const prods = (near || baer)
+        ? a.data.filter((x) => x.selskab === r.selskab && (!baer || x.baeredygtig === 'ja') && N(x[risk]) != null).map((x) => ({ navn: x.produkt, aop: N(x[risk]) }))
+        : pr.data.filter((x) => x.selskab === r.selskab && x.form === 'Markedsrente' && N(x.aop) != null).map((x) => ({ navn: x.produkt, aop: N(x.aop) }));
+      const best = prods.sort((x, y) => x.aop - y.aop)[0];
+      return best ? { selskab: r.selskab, produkt: best.navn, aop: best.aop, afkast: N(r[akey]), note: r.tilfredshed || '' } : null;
+    }).filter(Boolean);
+    const norm = (vals, v, higher) => {
+      const lo = d3.min(vals), hi = d3.max(vals);
+      if (v == null || lo == null) return null;
+      if (hi === lo) return 100;
+      return higher ? (v - lo) / (hi - lo) * 100 : (hi - v) / (hi - lo) * 100;
+    };
+    const aops = rows.map((r) => r.aop), rets = rows.map((r) => r.afkast).filter((v) => v != null);
+    rows.forEach((r) => {
+      const c = norm(aops, r.aop, false), k = norm(rets, r.afkast, true);
+      r.score = Math.round(k == null ? c : (1 - w) * c + w * k);
+    });
+    return rows.sort((x, y) => y.score - x.score || x.aop - y.aop);
+  };
+  dash.draw('rank_n', (el) => { const r = rankData(); const i = Number(el.dataset.n) - 1; el.textContent = r && r[i] ? r[i].selskab : '—'; });
+  dash.draw('rank_score', (el) => { const r = rankData(); el.textContent = r && r[0] ? f0(r[0].score) : '—'; });
+  dash.draw('rank_body', (tb) => {
+    tb.replaceChildren();
+    const rows = rankData(); if (!rows) return;
+    rows.forEach((r, i) => {
+      const tr = document.createElement('tr'); if (i === 0) tr.className = 'mo-top';
+      cell(tr, String(i + 1), 'num'); cell(tr, r.selskab); cell(tr, r.produkt);
+      cell(tr, FMT.pct2(r.aop), 'num'); cell(tr, dash_(r.afkast, FMT.pct2), 'num');
+      const td = document.createElement('td'); td.className = 'num';
+      const wrap = document.createElement('div'); wrap.className = 'mo-barcell';
+      const bar = document.createElement('span'); bar.className = 'b';
+      bar.style.width = Math.max(2, Math.round(60 * r.score / 100)) + 'px';
+      bar.style.background = i === 0 ? COL(0) : 'var(--cds-chart-muted)';
+      const t = document.createElement('span'); t.textContent = f0(r.score);
+      wrap.append(bar, t); td.append(wrap); tr.append(td);
+      cell(tr, r.note, 'mo-hide-narrow');
+      tb.append(tr);
+    });
+  });
+  dash.draw('am_body', (tb) => {
+    tb.replaceChildren();
+    const pr = dash.data('pension_produkter'), a = dash.data('aop_5aar');
+    if (pr.status !== 'ok' || a.status !== 'ok') return;
+    const p = P();
+    const risk = ['lav_risiko', 'mellem_risiko', 'hoej_risiko'].includes(p.risiko) ? p.risiko : 'mellem_risiko';
+    const prov = (brancheRow() || {}).overenskomst_udbyder;
+    const ret = (selskab) => { const m = pr.data.find((x) => x.selskab === selskab && x.form === 'Markedsrente' && N(x.nettoafkast_10aar) != null); return m ? N(m.nettoafkast_10aar) : null; };
+    const rows = p.alder === 'taet'
+      ? a.data.filter((x) => x.selskabstype === 'Arbejdsmarkedspension' && N(x[risk]) != null).map((x) => ({ selskab: x.selskab, produkt: x.produkt, aop: N(x[risk]), afkast: ret(x.selskab) }))
+      : pr.data.filter((x) => x.selskabstype === 'Arbejdsmarkedspension' && x.form === 'Markedsrente').map((x) => ({ selskab: x.selskab, produkt: x.produkt, aop: N(x.aop), afkast: N(x.nettoafkast_10aar) }));
+    rows.sort((x, y) => x.aop - y.aop).forEach((r) => {
+      const tr = document.createElement('tr'); if (r.selskab === prov) tr.className = 'mo-top';
+      cell(tr, r.selskab === prov ? `${r.selskab} (overenskomst)` : r.selskab); cell(tr, r.produkt);
+      cell(tr, FMT.pct2(r.aop), 'num'); cell(tr, dash_(r.afkast, FMT.pct2), 'num');
+      tb.append(tr);
+    });
+  });
+})();
+</script>
+
+</main>
+</body>
+</html>

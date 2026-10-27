@@ -1,0 +1,134 @@
+{
+  "datasets": {
+    "marsh_global": {
+      "titel": "Globale erhvervspriser (Marsh)",
+      "beskrivelse": "Kvartalsvis ændring i erhvervsforsikringspriser ved fornyelse i forhold til samme kvartal året før, globalt og pr. forretningsområde, Q1 2025 – Q3 2026. Fra Marsh Global Insurance Market Index (pressemeddelelser), afrundet til hele procent.",
+      "fil": "data/marsh_global.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Marsh",
+      "opdateres": "Kvartalsvis, når Marsh offentliggør nyt indeks (ca. 3 uger efter kvartalsslut)"
+    },
+    "marsh_europe": {
+      "titel": "Europæiske erhvervspriser (Marsh)",
+      "beskrivelse": "Kvartalsvis prisændring for Europa samlet og for ejendom og cyber, hvor Marsh har offentliggjort tallet, Q1 2025 – Q3 2026. Tomme felter er ikke offentliggjort. Fra Marsh Global Insurance Market Index.",
+      "fil": "data/marsh_europe.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Marsh",
+      "opdateres": "Kvartalsvis"
+    },
+    "marsh_regions": {
+      "titel": "Prisændring pr. region Q3 2026",
+      "beskrivelse": "Samlet prisændring og ejendom pr. region i Q3 2026, fra Marsh Global Insurance Market Index.",
+      "fil": "data/marsh_regions.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Marsh",
+      "opdateres": "Kvartalsvis"
+    },
+    "dk_skade_sektor": {
+      "titel": "Danske skadesselskaber, nøgletal",
+      "beskrivelse": "Bruttopræmier, erstatnings-, omkostnings- og combined ratio (netto), solvensdækning og egenkapitalforrentning for danske skadesforsikringsselskaber 2021–2025. Fra Finanstilsynet, Sektoren i tal (skadesforsikringsselskaber). Databrud i 2025: Topdanmark indgår i If's danske filial.",
+      "fil": "data/dk_skade_sektor.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Finanstilsynet",
+      "opdateres": "Årligt, når Finanstilsynet offentliggør årstal"
+    },
+    "dk_skade_selskaber": {
+      "titel": "Største skadesselskaber 2025",
+      "beskrivelse": "Bruttopræmier i mio. kr. for de 15 største skadesforsikringsselskaber under dansk tilsyn, 2025. Fra Finanstilsynet, Sektoren i tal. Filialer af udenlandske selskaber (fx If, Gjensidige) indgår ikke.",
+      "fil": "data/dk_skade_selskaber.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Finanstilsynet",
+      "opdateres": "Årligt"
+    },
+    "selskaber_kvartal": {
+      "titel": "Selskabernes kvartalstal",
+      "beskrivelse": "Combined ratio pr. selskab og segment for seneste kvartal og samme periode året før, med bemærkninger om erhvervsmarkedet. Fra Tryg (Q3 2026), Gjensidige (Q3 2026, via Investing.com), Sampo/If (halvårsrapport 2026) og Alm. Brand (opjustering 5. okt. 2026).",
+      "fil": "data/selskaber_kvartal.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra selskabernes regnskabsmeddelelser",
+      "opdateres": "Kvartalsvis, efter selskabernes regnskaber"
+    },
+    "loenindeks": {
+      "titel": "Lønindeks, årlig stigning",
+      "beskrivelse": "Årlig stigning i det standardberegnede lønindeks for den private sektor (virksomheder og organisationer) og alle sektorer, Q4 2024 – Q2 2026. Fra Danmarks Statistik, Nyt om lønindeks.",
+      "fil": "data/loenindeks.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Danmarks Statistik",
+      "opdateres": "Kvartalsvis (ca. 2 måneder efter kvartalsslut)"
+    },
+    "byggeomkostninger": {
+      "titel": "Byggeomkostningsindeks",
+      "beskrivelse": "Byggeomkostningsindeks for boliger i alt, materialer og arbejdsløn (2021 = 100), Q2 2025 – Q2 2026. Fra Danmarks Statistik, Nyt om byggeomkostningsindeks.",
+      "fil": "data/byggeomkostninger.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Danmarks Statistik",
+      "opdateres": "Kvartalsvis"
+    },
+    "forbrugerpriser": {
+      "titel": "Forbrugerpriser, årlig stigning",
+      "beskrivelse": "Årlig stigning i forbrugerprisindekset juni–september 2026. Fra Danmarks Statistik, Nyt om forbruger- og nettoprisindeks.",
+      "fil": "data/forbrugerpriser.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Danmarks Statistik",
+      "opdateres": "Månedligt (ca. den 10.)"
+    },
+    "pension_sektor": {
+      "titel": "Pensionssektoren, nøgletal",
+      "beskrivelse": "Afkast for markeds- og gennemsnitsrenteprodukter, omkostninger pr. forsikret, omkostningsprocent, solvensdækning og bruttopræmier for livsforsikringsselskaber og tværgående pensionskasser 2021–2025. Fra Finanstilsynet, Sektoren i tal.",
+      "fil": "data/pension_sektor.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Finanstilsynet",
+      "opdateres": "Årligt"
+    },
+    "pension_produkter": {
+      "titel": "ÅOP pr. pensionsprodukt",
+      "beskrivelse": "ÅOP for en typisk kunde (40–55 år, 30–80.000 kr. årligt, 500.000 kr. opsparet), gennemsnitligt nettoafkast 2016–2025 og risikotal pr. produkt. Fra branchestatistikken som gengivet af sammenligner.dk (hentet sep. 2026); selskabstype er Claudes inddeling (kommercielle selskaber med firmaaftaler vs. arbejdsmarkedspension).",
+      "fil": "data/pension_produkter.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra sammenligner.dk",
+      "opdateres": "Årligt"
+    },
+    "aop_5aar": {
+      "titel": "ÅOP 5 år før pension",
+      "beskrivelse": "ÅOP i procent for markedsrenteprodukter 5 år før pension ved lav, mellem og høj risiko, med selskab, selskabstype og om profilen er bæredygtig (Claudes markering ud fra produktnavnet). Fra Analysehuset Nikolaj Holdt Mikkelsen, gengivet af Faglig Senior (maj 2026).",
+      "fil": "data/aop_5aar.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Faglig Senior",
+      "opdateres": "Årligt"
+    },
+    "pension_selskaber": {
+      "titel": "Pensionsselskaber, afkast og størrelse",
+      "beskrivelse": "Pr. selskab: aktiver 2025 (Finanstilsynet), gennemsnitligt årligt afkast 2016–nov. 2025 og afkast jan.–nov. 2025 for en kunde 20 år før pension ved middel risiko (BEDSTpension forsikringsmægler, dec. 2025), bæredygtig profil og EPSI Pension 2026-placering.",
+      "fil": "data/pension_selskaber.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude, fra Finanstilsynet, BEDSTpension og EPSI",
+      "opdateres": "Årligt"
+    },
+    "brancher": {
+      "titel": "Branche og overenskomstpension",
+      "beskrivelse": "Hvilket pensionsselskab overenskomsten typisk peger på i hver branche. Claudes oversigt ud fra Industriens Pension, TEKNIQ og PensionDanmarks brancheområder – den konkrete overenskomst afgør.",
+      "fil": "data/brancher.csv",
+      "opdateret": "2026-10-27",
+      "af": "Claude",
+      "opdateres": "Ved overenskomstfornyelse"
+    },
+    "haendelser": {
+      "titel": "Markedshændelser",
+      "beskrivelse": "Udvalgte hændelser i 2025–2026, der påvirker priser og vilkår på det danske erhvervsforsikringsmarked, med kilde og link. Samlet af Claude fra selskabsmeddelelser, Marsh, Finanstilsynet og Kromann Reumert.",
+      "fil": "data/haendelser.json",
+      "opdateret": "2026-10-27",
+      "af": "Claude",
+      "opdateres": "Løbende"
+    }
+  },
+  "params": {
+    "afkast": "10aar",
+    "alder": "langt",
+    "baeredygtig": false,
+    "branche": "Anden branche / ingen overenskomst",
+    "overenskomst": "ved_ikke",
+    "risiko": "mellem_risiko",
+    "vaegt": 50,
+    "vis_am": false
+  }
+}
