@@ -8,8 +8,8 @@ Siden er ren HTML, CSS og JavaScript uden byggetrin. Alle tal ligger som CSV- og
 
 | Fane | Viser |
 |---|---|
-| Overblik | Nøgletal og markedshændelser, der påvirker priser og vilkår ved næste fornyelse |
-| Markedspriser | Marsh Global Insurance Market Index: globalt pr. forretningsområde, Europa og regioner |
+| Overblik | Danske og europæiske nøgletal samt markedshændelser, der påvirker priser og vilkår ved næste fornyelse |
+| Markedspriser | Danske prissignaler fra selskaberne, arbejdsskade efter Højesterets dom, stormskader og faste satser – samt Marsh-indekset for Europa og globalt |
 | Forsikringsselskaber | Finanstilsynets nøgletal for danske skadesselskaber og selskabernes seneste kvartalstal |
 | Indeksregulering | Lønindeks, byggeomkostningsindeks og forbrugerpriser samt en beregner for præmiestigning |
 | Pension | Sektorens afkast og omkostninger, ÅOP pr. produkt og ÅOP 5 år før pension |
@@ -39,7 +39,7 @@ data/*.csv, *.json  Selve tallene
 
 ## Opdatér tallene
 
-1. Ret eller tilføj rækker i den relevante fil i `data/`. Behold kolonnenavnene.
+1. Ret eller tilføj rækker i den relevante fil i `data/`. Behold kolonnenavnene, og sæt tekst med komma i anførselstegn (fx `"84,9 %"`), ellers bliver kolonnerne forskudt.
 2. Opdatér `opdateret` (og evt. `beskrivelse`) for datasættet i `data/datasets.json`.
 3. Genindlæs siden.
 
@@ -47,6 +47,10 @@ Når en ny periode tilføjes, skal de faste periodehenvisninger i `index.html` (
 
 | Fil | Kilde | Opdateres |
 |---|---|---|
+| `dk_erhverv_puls.csv` | Gjensidige, Tryg, Alm. Brand og Sampo/If (præmievækst og combined ratio i danske og nordiske segmenter) | Kvartalsvis |
+| `dk_arbejdsskade.csv` | Selskabernes hensættelser efter Højesterets arbejdsskadedom 28. april 2026 | Kvartalsvis |
+| `dk_vejrskader.csv` | Forsikring & Pension (storm- og skybrudsskader) | Halvårligt |
+| `dk_satser.csv` | Beskæftigelsesministeriet (arbejdsskadesatser) og Lov om visse naturskader | Årligt |
 | `marsh_global.csv`, `marsh_europe.csv`, `marsh_regions.csv` | Marsh Global Insurance Market Index | Kvartalsvis |
 | `dk_skade_sektor.csv`, `dk_skade_selskaber.csv` | Finanstilsynet, Sektoren i tal (skadesforsikring) | Årligt |
 | `selskaber_kvartal.csv` | Tryg, Gjensidige, Sampo/If og Alm. Brand | Kvartalsvis |

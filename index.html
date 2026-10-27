@@ -81,7 +81,7 @@
 <div class="mo">
   <header class="mo-head" id="top">
     <h1>Markedsovervågning – erhvervsforsikring og pension</h1>
-    <p class="mo-lede">Erhvervspriserne i Europa ændrede sig <b data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</b> i Q3 2026, og globalt faldt ejendom <b data-draw="val" data-source="marsh_global" data-field="ejendom" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</b>. Danske skadesforsikringsselskaber havde en combined ratio på <b data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2025" data-fmt="pct1">—</b> i 2025, så selskaberne tjener godt – det giver forhandlingsrum ved fornyelse. Den automatiske indeksregulering følger lønindekset, der steg <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</b> det seneste år.</p>
+    <p class="mo-lede">Danske selskaber tjener godt på erhverv – Gjensidiges danske erhvervsforretning havde en combined ratio på <b data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</b> i Q3 2026 – men arbejdsskade bliver dyrere efter Højesterets dom, og storm Dave gav <b data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-dk" data-fmt="num0">—</b> stormskader i 1. halvår. I Europa ændrede erhvervspriserne sig <b data-draw="val" data-source="marsh_europe" data-field="samlet" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</b> i Q3 2026, og den automatiske indeksregulering følger lønindekset, der steg <b data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</b> det seneste år.</p>
   </header>
 
   <nav class="mo-tabs" role="tablist" aria-label="Sider">
@@ -95,6 +95,51 @@
 
   <!-- OVERBLIK -->
   <section class="mo-page" id="overblik" role="tabpanel" aria-labelledby="tab-overblik">
+    <h2 class="mo-h2" id="danmark">Danmark</h2>
+    <div class="mo-tiles" id="nøgletal-dk">
+      <div class="mo-tile">
+        <span class="mo-tile-label">Combined ratio, danske skadesselskaber · 2025</span>
+        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2025" data-fmt="pct1">—</span>
+        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2024" data-fmt="pct1">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Gjensidige, erhverv Danmark · combined ratio Q3 2026</span>
+        <span class="mo-big" data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</span>
+        <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="dk_erhverv_puls" data-field="combined_ratio_aaret_foer" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1">—</span> · omsætning <span data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=gjensidige-dk-erhverv" data-fmt="pct1s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Alm. Brand, erhvervspræmier · Q2 2026</span>
+        <span class="mo-big" data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=almbrand-erhverv" data-fmt="pct1s">—</span>
+        <span class="mo-sub">Privat: <span data-draw="val" data-source="dk_erhverv_puls" data-field="praemievaekst" data-where="id=almbrand-privat" data-fmt="pct1s">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Arbejdsskade: Trygs hensættelse efter Højesteret</span>
+        <span class="mo-big" data-draw="val" data-source="dk_arbejdsskade" data-field="hensaettelse_mio" data-where="selskab=Tryg" data-fmt="mio">—</span>
+        <span class="mo-sub">Alm. Brand: <span data-draw="val" data-source="dk_arbejdsskade" data-field="hensaettelse_mio" data-where="selskab=Alm. Brand" data-fmt="mio">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Stormskader · 1. halvår 2026</span>
+        <span class="mo-big" data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-dk" data-fmt="num0">—</span>
+        <span class="mo-sub">Heraf Nordjylland: <span data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=storm-nj" data-fmt="num0">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Skybrudsskader · 2025 (ca.)</span>
+        <span class="mo-big" data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=skybrud-2025" data-fmt="num0">—</span>
+        <span class="mo-sub">2023: ca. <span data-draw="val" data-source="dk_vejrskader" data-field="antal" data-where="id=skybrud-2023" data-fmt="num0">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Lønindeks, privat sektor · årlig stigning Q2 2026</span>
+        <span class="mo-big" data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
+        <span class="mo-sub">Q2 2025: <span data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2025" data-fmt="pct1">—</span></span>
+      </div>
+      <div class="mo-tile">
+        <span class="mo-tile-label">Byggeomkostninger · årlig stigning Q2 2026</span>
+        <span class="mo-big" data-draw="val" data-source="byg_aarlig" data-field="aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
+        <span class="mo-sub">Indeks <span data-draw="val" data-source="byggeomkostninger" data-field="i_alt" data-where="kvartal=Q2 2026" data-fmt="idx1">—</span> (2021 = 100)</span>
+      </div>
+    </div>
+
+    <h2 class="mo-h2" id="europa-globalt">Europa og globalt</h2>
     <div class="mo-tiles" id="nøgletal">
       <div class="mo-tile">
         <span class="mo-tile-label">Europa, samlet prisændring · Q3 2026</span>
@@ -110,21 +155,6 @@
         <span class="mo-tile-label">Globalt, ansvar · Q3 2026</span>
         <span class="mo-big" data-draw="val" data-source="marsh_global" data-field="ansvar" data-where="kvartal=Q3 2026" data-fmt="pct0s">—</span>
         <span class="mo-sub">Q3 2025: <span data-draw="val" data-source="marsh_global" data-field="ansvar" data-where="kvartal=Q3 2025" data-fmt="pct0s">—</span></span>
-      </div>
-      <div class="mo-tile">
-        <span class="mo-tile-label">Combined ratio, danske skadesselskaber · 2025</span>
-        <span class="mo-big" data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2025" data-fmt="pct1">—</span>
-        <span class="mo-sub">2024: <span data-draw="val" data-source="dk_skade_sektor" data-field="combined_ratio_netto" data-where="aar=2024" data-fmt="pct1">—</span></span>
-      </div>
-      <div class="mo-tile">
-        <span class="mo-tile-label">Lønindeks, privat sektor · årlig stigning Q2 2026</span>
-        <span class="mo-big" data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
-        <span class="mo-sub">Q2 2025: <span data-draw="val" data-source="loenindeks" data-field="privat_aarlig_stigning" data-where="kvartal=Q2 2025" data-fmt="pct1">—</span></span>
-      </div>
-      <div class="mo-tile">
-        <span class="mo-tile-label">Byggeomkostninger · årlig stigning Q2 2026</span>
-        <span class="mo-big" data-draw="val" data-source="byg_aarlig" data-field="aarlig_stigning" data-where="kvartal=Q2 2026" data-fmt="pct1">—</span>
-        <span class="mo-sub">Indeks <span data-draw="val" data-source="byggeomkostninger" data-field="i_alt" data-where="kvartal=Q2 2026" data-fmt="idx1">—</span> (2021 = 100)</span>
       </div>
     </div>
 
@@ -148,6 +178,67 @@
 
   <!-- MARKEDSPRISER -->
   <section class="mo-page" id="priser" role="tabpanel" aria-labelledby="tab-priser" hidden>
+    <h2 class="mo-h2" id="priser-danmark">Danmark</h2>
+    <p class="mo-note">Der findes intet offentligt prisindeks for danske erhvervsforsikringer. Det bedste billede får man fra selskabernes egne tal for præmievækst og lønsomhed i de danske og nordiske erhvervssegmenter.</p>
+    <div class="mo-card" id="dk-puls">
+      <h3>Præmievækst i erhverv og privat</h3>
+      <p class="mo-note">Ændring i præmieindtægt i forhold til samme periode året før, lokal valuta. Danske segmenter fremhævet; Tryg erhverv og If er nordiske tal.</p>
+      <div class="mo-chart mo-short" data-draw="ch_dk_puls" data-source="dk_erhverv_puls"></div>
+      <div class="mo-tablewrap">
+        <table class="mo-table" data-source="dk_erhverv_puls" data-row-key="id">
+          <thead><tr>
+            <th data-field="selskab">Selskab</th>
+            <th data-field="segment">Segment</th>
+            <th data-field="geografi">Geografi</th>
+            <th data-field="periode">Periode</th>
+            <th data-field="praemievaekst" class="num">Præmievækst</th>
+            <th data-field="combined_ratio" class="num">Combined ratio</th>
+            <th data-field="combined_ratio_aaret_foer" class="num mo-hide-narrow">Året før</th>
+            <th data-field="prissignal">Prissignal</th>
+            <th data-field="kommentar" class="mo-wide mo-hide-narrow">Kommentar</th>
+          </tr></thead>
+          <tbody data-draw="puls_body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mo-grid">
+      <div class="mo-card" id="arbejdsskade">
+        <h3>Arbejdsskade efter Højesterets dom</h3>
+        <p class="mo-note">Højesteret sænkede 28. april 2026 tærsklen for erstatning for tab af erhvervsevne fra 15 % til 5 % med tilbagevirkende kraft. Selskaberne har styrket reserverne og gennemgår priserne; det meste af markedet fornyes 1. januar.</p>
+        <div class="mo-tablewrap">
+          <table class="mo-table" data-source="dk_arbejdsskade" data-row-key="selskab">
+            <thead><tr>
+              <th data-field="selskab">Selskab</th>
+              <th data-field="hensaettelse_mio" class="num">Hensættelse</th>
+              <th data-field="periode">Periode</th>
+              <th data-field="kommentar" class="mo-wide">Kommentar</th>
+            </tr></thead>
+            <tbody data-draw="arb_body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mo-card" id="storm">
+        <h3>Stormskader 1. halvår 2026</h3>
+        <p class="mo-note">Anmeldte skader, Forsikring & Pension. Storm Dave i april ramte især Nordjylland.</p>
+        <div class="mo-chart mo-short" data-draw="ch_storm" data-source="dk_vejrskader"></div>
+      </div>
+    </div>
+    <div class="mo-card" id="satser">
+      <h3>Faste danske satser, der påvirker præmien</h3>
+      <p class="mo-note">Naturskadeafgiften opkræves på hver brandpolice. Arbejdsskadesatserne reguleres årligt og driver selskabernes skadesudgifter.</p>
+      <div class="mo-tablewrap">
+        <table class="mo-table" data-source="dk_satser" data-row-key="id">
+          <thead><tr>
+            <th data-field="sats">Sats</th>
+            <th data-field="vaerdi" class="num">Beløb</th>
+            <th data-field="gaelder">Gælder</th>
+          </tr></thead>
+          <tbody data-draw="satser_body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2 class="mo-h2" id="priser-globalt">Europa og globalt (Marsh)</h2>
     <div class="mo-card" id="globale-priser">
       <h3>Globale prisændringer pr. forretningsområde</h3>
       <p class="mo-note">Gennemsnitlig ændring i præmierate ved fornyelse i forhold til samme kvartal året før. Marsh Global Insurance Market Index.</p>
@@ -691,6 +782,56 @@
       { key: 'cyber', label: 'Cyber', color: COL(3) },
     ], { zero: true, label: 'Prisændringer i Europa' });
   });
+  // ----- Danish market -----
+  dash.draw('ch_dk_puls', (el) => {
+    const rows = state(el, 'dk_erhverv_puls'); if (!rows) return;
+    const r2 = rows.filter((r) => N(r.praemievaekst) != null)
+      .map((r) => ({ etiket: `${r.selskab} · ${r.segment} (${r.geografi})`, praemievaekst: r.praemievaekst, geografi: r.geografi }))
+      .sort((a, b) => N(b.praemievaekst) - N(a.praemievaekst));
+    barH(el, r2, 'etiket', 'praemievaekst', { fmt: FMT.pct1s, hl: (r) => r.geografi === 'Danmark', label: 'Præmievækst pr. selskab og segment' });
+  });
+  dash.draw('puls_body', (tb) => {
+    const d = dash.data('dk_erhverv_puls');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.id;
+      cell(tr, r.selskab); cell(tr, r.segment); cell(tr, r.geografi); cell(tr, r.periode);
+      cell(tr, dash_(N(r.praemievaekst), FMT.pct1s), 'num');
+      cell(tr, dash_(N(r.combined_ratio), FMT.pct1), 'num');
+      cell(tr, dash_(N(r.combined_ratio_aaret_foer), FMT.pct1), 'num mo-hide-narrow');
+      cell(tr, r.prissignal); cell(tr, r.kommentar || '', 'mo-hide-narrow');
+      tb.append(tr);
+    });
+  });
+  dash.draw('arb_body', (tb) => {
+    const d = dash.data('dk_arbejdsskade');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.selskab;
+      const v = N(r.hensaettelse_mio);
+      cell(tr, r.selskab);
+      cell(tr, v == null ? '–' : `${f0(v)} mio. ${r.valuta === 'DKK' ? 'kr.' : r.valuta}`, 'num');
+      cell(tr, r.periode); cell(tr, r.kommentar);
+      tb.append(tr);
+    });
+  });
+  dash.draw('ch_storm', (el) => {
+    const rows = state(el, 'dk_vejrskader'); if (!rows) return;
+    barH(el, rows.filter((r) => r.type === 'Stormskader'), 'omraade', 'antal', { fmt: FMT.num0, hl: (r) => r.omraade === 'Hele landet', label: 'Stormskader 1. halvår 2026' });
+  });
+  dash.draw('satser_body', (tb) => {
+    const d = dash.data('dk_satser');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.forEach((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.id;
+      cell(tr, r.sats); cell(tr, `${f0(N(r.vaerdi))} ${r.enhed}`, 'num'); cell(tr, r.gaelder);
+      tb.append(tr);
+    });
+  });
+
   dash.draw('ch_regions', (el) => {
     const rows = state(el, 'marsh_regions'); if (!rows) return;
     barH(el, [...rows].sort((a, b) => N(a.samlet) - N(b.samlet)), 'region', 'samlet', { hl: (r) => r.region === 'Europa', label: 'Samlet prisændring pr. region' });

@@ -1,0 +1,9 @@
+id,selskab,segment,geografi,periode,praemievaekst,combined_ratio,combined_ratio_aaret_foer,prissignal,kommentar
+gjensidige-dk-erhverv,Gjensidige,Erhverv,Danmark,Q3 2026,1.7,72.0,85.4,Stigende,Væksten er drevet af prisstigninger på de fleste hovedprodukter; færre mellemstore skader.
+gjensidige-dk-privat,Gjensidige,Privat,Danmark,Q3 2026,2.0,88.4,94.3,Stigende,
+almbrand-erhverv,Alm. Brand,Erhverv,Danmark,Q2 2026,-2.3,,,Faldende volumen,"Fald skyldes fokus på lønsomhed; uden arbejdsskade og industrikunder +1,0 %. Hensættelse på 700 mio. kr. efter Højesteretsdommen."
+almbrand-privat,Alm. Brand,Privat,Danmark,Q2 2026,5.2,,,Stigende,
+tryg-dk,Tryg,I alt,Danmark,Q3 2026,,83.0,81.9,Aftagende,"Prisstigningerne aftager med lavere inflation. Fastholdelse i erhverv 84,9 %."
+tryg-erhverv,Tryg,Erhverv,Norden,Q3 2026,-0.7,73.5,73.7,Svag,Svage fornyelser i dansk erhverv i starten af 2026 og tab af større erhvervskunder.
+if-commercial,If (Sampo),Erhverv (SMV m.fl.),Norden,Q2 2026,8.6,82.9,80.5,Stigende,Fornyelser og genprisning over skadesinflationen; stor dansk personforsikringsaftale. SMV voksede over 5 %.
+if-industrial,If (Sampo),Industri,Norden,Q2 2026,-0.6,79.0,80.0,Faldende,Pres på genprisning; konkurrence ved 1. januar-fornyelserne.

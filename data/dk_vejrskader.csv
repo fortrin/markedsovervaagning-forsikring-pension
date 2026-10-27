@@ -1,0 +1,9 @@
+id,type,omraade,periode,antal,cirka
+storm-dk,Stormskader,Hele landet,1. halvår 2026,16214,nej
+storm-nj,Stormskader,Region Nordjylland,1. halvår 2026,7444,nej
+storm-frederikshavn,Stormskader,Frederikshavn,1. halvår 2026,1834,nej
+storm-aalborg,Stormskader,Aalborg,1. halvår 2026,1716,nej
+storm-hjoerring,Stormskader,Hjørring,1. halvår 2026,1643,nej
+storm-broenderslev,Stormskader,Brønderslev,1. halvår 2026,502,nej
+skybrud-2023,Skybrudsskader,Hele landet,2023,23000,ja
+skybrud-2025,Skybrudsskader,Hele landet,2025,12000,ja

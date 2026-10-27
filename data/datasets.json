@@ -1,5 +1,37 @@
 {
   "datasets": {
+    "dk_erhverv_puls": {
+      "titel": "Danske erhvervspriser – selskabernes signaler",
+      "beskrivelse": "Præmievækst, combined ratio og prissignal for danske og nordiske erhvervssegmenter fra Gjensidige (Q3 2026), Tryg (Q3 2026), Alm. Brand (Q2 2026) og If/Sampo (Q2 2026). Præmievækst er i lokal valuta. Prissignal er Claudes sammenfatning af selskabernes egne udsagn.",
+      "fil": "data/dk_erhverv_puls.csv",
+      "opdateret": "2026-10-28",
+      "af": "Claude, fra selskabernes regnskaber",
+      "opdateres": "Kvartalsvis"
+    },
+    "dk_vejrskader": {
+      "titel": "Vejrskader i Danmark",
+      "beskrivelse": "Anmeldte stormskader i 1. halvår 2026 (hele landet, Region Nordjylland og de mest ramte kommuner) og skybrudsskader 2023 og 2025 (afrundede tal). Fra Forsikring & Pension.",
+      "fil": "data/dk_vejrskader.csv",
+      "opdateret": "2026-10-28",
+      "af": "Claude, fra Forsikring & Pension",
+      "opdateres": "Halvårligt"
+    },
+    "dk_arbejdsskade": {
+      "titel": "Arbejdsskade efter Højesteret",
+      "beskrivelse": "Selskabernes hensættelser efter Højesterets dom af 28. april 2026, der sænkede tærsklen for erhvervsevnetab fra 15 % til 5 %. Fra Tryg, Alm. Brand, Gjensidige (via Økonomisk Ugebrev) og Sampo.",
+      "fil": "data/dk_arbejdsskade.csv",
+      "opdateret": "2026-10-28",
+      "af": "Claude, fra selskabernes regnskaber",
+      "opdateres": "Kvartalsvis"
+    },
+    "dk_satser": {
+      "titel": "Faste danske satser",
+      "beskrivelse": "Naturskadeafgift pr. brandpolice (Lov om visse naturskader) og centrale arbejdsskadesatser for 2026 (Beskæftigelsesministeriet).",
+      "fil": "data/dk_satser.csv",
+      "opdateret": "2026-10-28",
+      "af": "Claude, fra Beskæftigelsesministeriet og Lovguiden",
+      "opdateres": "Årligt"
+    },
     "marsh_global": {
       "titel": "Globale erhvervspriser (Marsh)",
       "beskrivelse": "Kvartalsvis ændring i erhvervsforsikringspriser ved fornyelse i forhold til samme kvartal året før, globalt og pr. forretningsområde, Q1 2025 – Q3 2026. Fra Marsh Global Insurance Market Index (pressemeddelelser), afrundet til hele procent.",
@@ -116,7 +148,7 @@
       "titel": "Markedshændelser",
       "beskrivelse": "Udvalgte hændelser i 2025–2026, der påvirker priser og vilkår på det danske erhvervsforsikringsmarked, med kilde og link. Samlet af Claude fra selskabsmeddelelser, Marsh, Finanstilsynet og Kromann Reumert.",
       "fil": "data/haendelser.json",
-      "opdateret": "2026-10-27",
+      "opdateret": "2026-10-28",
       "af": "Claude",
       "opdateres": "Løbende"
     }

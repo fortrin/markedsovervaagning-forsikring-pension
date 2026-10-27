@@ -12,10 +12,10 @@
   "id": "gjensidige-q3-26",
   "dato": "2026-10-23",
   "emne": "Gjensidige Q3 2026",
-  "hvad": "Combined ratio i dansk erhverv 72,0 % mod 85,4 % året før; koncernen 73,6 %.",
+  "hvad": "Erhverv Danmark: combined ratio 72,0 % (85,4 % året før) og omsætning +1,7 % drevet af prisstigninger. Privat Danmark 88,4 %.",
   "betydning": "Høj lønsomhed i dansk erhverv giver plads til skarpere priser.",
-  "kilde": "Investing.com",
-  "url": "https://www.investing.com/news/company-news/gjensidige-q3-2026-slides-profit-surges-on-strong-underwriting-93CH-4968329"
+  "kilde": "Gjensidige",
+  "url": "https://mb.cision.com/Public/1122/4414214/967ebfead2010d69.pdf"
  },
  {
   "id": "tryg-q3-26",
@@ -70,5 +70,32 @@
   "betydning": "Finanstilsynets danske markedstal for 2025 mangler en stor erhvervsaktør – sammenlign med forsigtighed.",
   "kilde": "Finanstilsynet",
   "url": "https://cdn.finanstilsynet.dk/finanstilsynet/Media/639135613237044894/sit_skadesforsikringsselskaber.html"
+ },
+ {
+  "id": "fp-storm-h1-26",
+  "dato": "2026-09-24",
+  "emne": "16.214 stormskader i 1. halvår",
+  "hvad": "Forsikring & Pension: 16.214 anmeldte stormskader i 1. halvår 2026, heraf 7.444 i Region Nordjylland (46 %) efter storm Dave.",
+  "betydning": "Forvent skærpet fokus på tage, selvrisici og præmier for bygninger i Nordjylland.",
+  "kilde": "Forsikring & Pension",
+  "url": "https://via.ritzau.dk/pressemeddelelse/15177215/nordjylland-hardt-ramt-af-stormskader?lang=da"
+ },
+ {
+  "id": "fp-skybrud-25",
+  "dato": "2026-06-29",
+  "emne": "Skybrudsskader fortsat højt",
+  "hvad": "Knap 12.000 skybrudsskader i 2025 mod knap 23.000 i 2023 – stadig langt over niveauet de foregående ti år.",
+  "betydning": "Skybrud er en vedvarende prisfaktor på bygnings- og løsøreforsikring.",
+  "kilde": "Forsikring & Pension",
+  "url": "https://via.ritzau.dk/pressemeddelelse/14963098/ny-opgorelse-antallet-af-skybrudsskader-er-fortsat-historisk-hojt?lang=da"
+ },
+ {
+  "id": "almbrand-q2-26",
+  "dato": "2026-07-16",
+  "emne": "Alm. Brand Q2: 700 mio. kr. til arbejdsskade",
+  "hvad": "Engangshensættelse på 700 mio. kr. efter Højesteretsdommen; erhvervspræmier -2,3 %.",
+  "betydning": "Arbejdsskadepriserne er under revision hos flere selskaber – forbered kunderne på stigninger ved 1. januar.",
+  "kilde": "Alm. Brand",
+  "url": "https://www.inderes.dk/releases/alm-brand-as-interim-report-for-q2"
  }
 ]

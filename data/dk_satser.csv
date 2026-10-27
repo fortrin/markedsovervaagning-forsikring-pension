@@ -1,0 +1,7 @@
+id,sats,vaerdi,enhed,gaelder
+naturskadeafgift,Naturskadeafgift pr. brandpolice (storm og stormflod),40,kr. pr. år,Lov om visse naturskader
+arb-aarsloen-maks,Arbejdsskade: maksimal årsløn i beregningen,662000,kr.,2026
+arb-aarsloen-normal,Arbejdsskade: normalårsløn,473000,kr.,2026
+arb-men-100,Arbejdsskade: godtgørelse for varigt mén 100 %,1103500,kr.,2026
+arb-eet-100,Arbejdsskade: erstatning for tab af erhvervsevne 100 % (maks.),505503,kr. pr. år,2026
+arb-dodsfald,Arbejdsskade: overgangsbeløb ved dødsfald,208000,kr.,2026
