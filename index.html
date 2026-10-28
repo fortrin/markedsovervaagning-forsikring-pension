@@ -447,12 +447,6 @@
             <option value="nej">Nej</option>
           </select>
         </label>
-        <label>Medarbejdernes alder
-          <select class="mo-p-alder" aria-label="Alder">
-            <option value="langt">Typisk 40–55 år</option>
-            <option value="taet">Tæt på pension (5 år)</option>
-          </select>
-        </label>
         <label>Risikoprofil
           <select class="mo-p-risiko" aria-label="Risikoprofil">
             <option value="lav_risiko">Lav</option>
@@ -485,7 +479,7 @@
           <p class="mo-note" data-draw="branche_note" data-source="brancher">—</p>
         </div>
 
-        <div class="mo-card" id="anbefaling" data-source="pension_selskaber pension_produkter aop_5aar">
+        <div class="mo-card" id="anbefaling" data-source="pension_selskaber aop_5aar">
           <h3>Umiddelbart bedst</h3>
           <p class="mo-lede">Ud fra kriterierne ligger <b data-draw="rank_n" data-n="1">—</b> øverst med <b data-draw="rank_score">—</b> point ud af 100, efterfulgt af <b data-draw="rank_n" data-n="2">—</b> og <b data-draw="rank_n" data-n="3">—</b>.</p>
           <div class="mo-tablewrap">
@@ -493,21 +487,24 @@
               <thead><tr>
                 <th class="num">Nr.</th>
                 <th>Selskab</th>
-                <th>Produkt brugt</th>
+                <th>Billigste produkt</th>
                 <th class="num">ÅOP</th>
+                <th class="num">Omk.-point</th>
                 <th class="num">Afkast p.a.</th>
+                <th class="num">Afkast-point</th>
                 <th class="num">Score</th>
-                <th class="mo-wide mo-hide-narrow">Bemærkning</th>
+                <th class="mo-wide mo-hide-narrow">Afkast målt på · bemærkning</th>
               </tr></thead>
               <tbody data-draw="rank_body"></tbody>
             </table>
           </div>
-          <p class="mo-note">Score: det bedste selskab på hvert parameter får 100 point og det dårligste 0; de to vægtes efter dit valg. ÅOP er selskabets billigste markedsrenteprodukt for en typisk kunde (40–55 år), eller ved valgt risiko 5 år før pension. Kræves bæredygtig profil, bruges den bæredygtige profils ÅOP 5 år før pension. Afkast er for en kunde 20 år før pension ved middel risiko (2025 er januar–november). Norli er udeladt, da der kun er tal for gennemsnitsrente. Tjek også forsikringsdækninger og rådgivning, som ikke indgår her.</p>
+          <p class="mo-note"><b>Sådan beregnes scoren:</b> Omkostningspoint = billigste ÅOP ÷ selskabets ÅOP × 100, så det billigste selskab får 100 og et selskab, der er dobbelt så dyrt, får 50. Afkastpoint = selskabets afkast ÷ bedste afkast × 100. Scoren vægter de to efter skyderen. Ligger samme selskab bedst på begge parametre, får det 100 uanset vægtningen.</p>
+          <p class="mo-note"><b>Data:</b> ÅOP er 5 år før pension ved den valgte risikoprofil for selskabets billigste markedsrenteprodukt (eller billigste bæredygtige profil). Det er den eneste opgørelse, der har alle produkter og risikoprofiler; ÅOP for en yngre kunde er typisk lidt højere. Afkastet er efter omkostninger for én bestemt profil pr. selskab ved middel risiko, 20 år før pension (2025 er januar–november), og ændrer sig ikke med risikovalget. Fordi afkastet allerede er efter omkostninger, tæller omkostningerne med i begge parametre. Norli er udeladt, da der kun er tal for gennemsnitsrente. Forsikringsdækninger og rådgivning indgår ikke.</p>
         </div>
 
         <div class="mo-card" id="am-sammenligning" hidden>
           <h3>Arbejdsmarkedspensioner til sammenligning</h3>
-          <p class="mo-note">Kan som regel kun vælges via overenskomst eller medlemskab. Afkast er branchestatistikkens gennemsnit 2016–2025 og kan ikke sammenlignes direkte med tallene ovenfor.</p>
+          <p class="mo-note">Kan som regel kun vælges via overenskomst eller medlemskab. ÅOP er 5 år før pension ved den valgte risikoprofil. Afkast er branchestatistikkens gennemsnit 2016–2025 og kan ikke sammenlignes direkte med tallene ovenfor.</p>
           <div class="mo-tablewrap" data-source="pension_produkter aop_5aar brancher">
             <table class="mo-table">
               <thead><tr>
@@ -968,7 +965,6 @@
   const P = () => dash.params();
   const ctl = (sel, ev, fn) => document.querySelectorAll(sel).forEach((el) => el.addEventListener(ev, () => fn(el)));
   ctl('.mo-p-ok', 'change', (el) => dash.setParams({ overenskomst: el.value }));
-  ctl('.mo-p-alder', 'change', (el) => dash.setParams({ alder: el.value }));
   ctl('.mo-p-risiko', 'change', (el) => dash.setParams({ risiko: el.value }));
   ctl('.mo-p-afkast', 'change', (el) => dash.setParams({ afkast: el.value }));
   ctl('.mo-p-vaegt', 'input', (el) => dash.setParams({ vaegt: Number(el.value) }));
@@ -983,7 +979,7 @@
   dash.onData(() => {
     const p = P();
     const setVal = (sel, v) => document.querySelectorAll(sel).forEach((el) => { if (el !== document.activeElement && v != null) el.value = String(v); });
-    setVal('.mo-p-ok', p.overenskomst); setVal('.mo-p-alder', p.alder); setVal('.mo-p-risiko', p.risiko); setVal('.mo-p-afkast', p.afkast);
+    setVal('.mo-p-ok', p.overenskomst); setVal('.mo-p-risiko', p.risiko); setVal('.mo-p-afkast', p.afkast);
     document.querySelectorAll('.mo-p-vaegt').forEach((el) => { if (el !== document.activeElement) el.value = String(p.vaegt ?? 50); });
     document.querySelectorAll('.mo-p-baer').forEach((el) => { el.checked = !!p.baeredygtig; });
     document.querySelectorAll('.mo-p-am').forEach((el) => { el.checked = !!p.vis_am; });
@@ -1004,31 +1000,30 @@
   dash.draw('branche_note', (el) => { const r = brancheRow(); el.textContent = r ? r.bemaerkning : '—'; });
   dash.draw('vaegt_lbl', (el) => { const w = Number(P().vaegt ?? 50); el.textContent = `${100 - w} % omkostninger · ${w} % afkast`; });
 
+  const riskKey = () => (['lav_risiko', 'mellem_risiko', 'hoej_risiko'].includes(P().risiko) ? P().risiko : 'mellem_risiko');
   const rankData = () => {
-    const s = dash.data('pension_selskaber'), pr = dash.data('pension_produkter'), a = dash.data('aop_5aar');
-    if ([s, pr, a].some((d) => d.status !== 'ok')) return null;
+    const s = dash.data('pension_selskaber'), a = dash.data('aop_5aar');
+    if ([s, a].some((d) => d.status !== 'ok')) return null;
     const p = P();
-    const near = p.alder === 'taet', baer = !!p.baeredygtig;
-    const risk = ['lav_risiko', 'mellem_risiko', 'hoej_risiko'].includes(p.risiko) ? p.risiko : 'mellem_risiko';
+    const baer = !!p.baeredygtig, risk = riskKey();
     const akey = p.afkast === '2025' ? 'afkast_2025_jan_nov' : 'afkast_10aar_pa';
     const w = Math.max(0, Math.min(100, Number(p.vaegt ?? 50))) / 100;
     const rows = s.data.filter((r) => r.selskabstype === 'Kommerciel').map((r) => {
-      const prods = (near || baer)
-        ? a.data.filter((x) => x.selskab === r.selskab && (!baer || x.baeredygtig === 'ja') && N(x[risk]) != null).map((x) => ({ navn: x.produkt, aop: N(x[risk]) }))
-        : pr.data.filter((x) => x.selskab === r.selskab && x.form === 'Markedsrente' && N(x.aop) != null).map((x) => ({ navn: x.produkt, aop: N(x.aop) }));
-      const best = prods.sort((x, y) => x.aop - y.aop)[0];
-      return best ? { selskab: r.selskab, produkt: best.navn, aop: best.aop, afkast: N(r[akey]), note: r.tilfredshed || '' } : null;
+      const best = a.data
+        .filter((x) => x.selskab === r.selskab && (!baer || x.baeredygtig === 'ja') && N(x[risk]) != null)
+        .map((x) => ({ navn: x.produkt, aop: N(x[risk]) }))
+        .sort((x, y) => x.aop - y.aop)[0];
+      return best ? { selskab: r.selskab, produkt: best.navn, aop: best.aop, afkast: N(r[akey]), afkastProdukt: r.afkast_produkt || '', note: r.tilfredshed || '' } : null;
     }).filter(Boolean);
-    const norm = (vals, v, higher) => {
-      const lo = d3.min(vals), hi = d3.max(vals);
-      if (v == null || lo == null) return null;
-      if (hi === lo) return 100;
-      return higher ? (v - lo) / (hi - lo) * 100 : (hi - v) / (hi - lo) * 100;
-    };
-    const aops = rows.map((r) => r.aop), rets = rows.map((r) => r.afkast).filter((v) => v != null);
+    // Point i forhold til det bedste selskab: billigste ÅOP = 100, dobbelt så dyr = 50; højeste afkast = 100.
+    const minAop = d3.min(rows, (r) => r.aop);
+    const maxRet = d3.max(rows, (r) => r.afkast);
     rows.forEach((r) => {
-      const c = norm(aops, r.aop, false), k = norm(rets, r.afkast, true);
-      r.score = Math.round(k == null ? c : (1 - w) * c + w * k);
+      const omk = r.aop > 0 ? 100 * minAop / r.aop : 0;
+      const afk = r.afkast == null || !(maxRet > 0) ? null : 100 * Math.max(0, r.afkast) / maxRet;
+      r.omkPoint = Math.round(omk);
+      r.afkPoint = afk == null ? null : Math.round(afk);
+      r.score = Math.round(afk == null ? omk : (1 - w) * omk + w * afk);
     });
     return rows.sort((x, y) => y.score - x.score || x.aop - y.aop);
   };
@@ -1040,7 +1035,8 @@
     rows.forEach((r, i) => {
       const tr = document.createElement('tr'); if (i === 0) tr.className = 'mo-top';
       cell(tr, String(i + 1), 'num'); cell(tr, r.selskab); cell(tr, r.produkt);
-      cell(tr, FMT.pct2(r.aop), 'num'); cell(tr, dash_(r.afkast, FMT.pct2), 'num');
+      cell(tr, FMT.pct2(r.aop), 'num'); cell(tr, f0(r.omkPoint), 'num');
+      cell(tr, dash_(r.afkast, FMT.pct2), 'num'); cell(tr, dash_(r.afkPoint, f0), 'num');
       const td = document.createElement('td'); td.className = 'num';
       const wrap = document.createElement('div'); wrap.className = 'mo-barcell';
       const bar = document.createElement('span'); bar.className = 'b';
@@ -1048,7 +1044,7 @@
       bar.style.background = i === 0 ? COL(0) : 'var(--cds-chart-muted)';
       const t = document.createElement('span'); t.textContent = f0(r.score);
       wrap.append(bar, t); td.append(wrap); tr.append(td);
-      cell(tr, r.note, 'mo-hide-narrow');
+      cell(tr, [r.afkastProdukt, r.note].filter(Boolean).join(' · '), 'mo-hide-narrow');
       tb.append(tr);
     });
   });
@@ -1056,13 +1052,12 @@
     tb.replaceChildren();
     const pr = dash.data('pension_produkter'), a = dash.data('aop_5aar');
     if (pr.status !== 'ok' || a.status !== 'ok') return;
-    const p = P();
-    const risk = ['lav_risiko', 'mellem_risiko', 'hoej_risiko'].includes(p.risiko) ? p.risiko : 'mellem_risiko';
+    const risk = riskKey();
     const prov = (brancheRow() || {}).overenskomst_udbyder;
     const ret = (selskab) => { const m = pr.data.find((x) => x.selskab === selskab && x.form === 'Markedsrente' && N(x.nettoafkast_10aar) != null); return m ? N(m.nettoafkast_10aar) : null; };
-    const rows = p.alder === 'taet'
-      ? a.data.filter((x) => x.selskabstype === 'Arbejdsmarkedspension' && N(x[risk]) != null).map((x) => ({ selskab: x.selskab, produkt: x.produkt, aop: N(x[risk]), afkast: ret(x.selskab) }))
-      : pr.data.filter((x) => x.selskabstype === 'Arbejdsmarkedspension' && x.form === 'Markedsrente').map((x) => ({ selskab: x.selskab, produkt: x.produkt, aop: N(x.aop), afkast: N(x.nettoafkast_10aar) }));
+    const rows = a.data
+      .filter((x) => x.selskabstype === 'Arbejdsmarkedspension' && N(x[risk]) != null && (!P().baeredygtig || x.baeredygtig === 'ja'))
+      .map((x) => ({ selskab: x.selskab, produkt: x.produkt, aop: N(x[risk]), afkast: ret(x.selskab) }));
     rows.sort((x, y) => x.aop - y.aop).forEach((r) => {
       const tr = document.createElement('tr'); if (r.selskab === prov) tr.className = 'mo-top';
       cell(tr, r.selskab === prov ? `${r.selskab} (overenskomst)` : r.selskab); cell(tr, r.produkt);

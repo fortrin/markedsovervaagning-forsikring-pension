@@ -1,13 +1,13 @@
-selskab,selskabstype,aktiver_mia,afkast_10aar_pa,afkast_2025_jan_nov,baeredygtigt_produkt,tilfredshed
-PFA,Kommerciel,875.29,7.22,11.60,PFA Klima+,Højeste kundetilfredshed blandt kommercielle selskaber (EPSI 2026: nr. 3 samlet)
-Danica,Kommerciel,609.29,7.50,6.41,Danica Ansvarligt Valg,
-Velliv,Kommerciel,355.33,6.33,8.90,Velliv Aftryk,
-AP Pension,Kommerciel,205.98,8.12,10.22,AP Omtanke,
-Nordea Pension,Kommerciel,137.47,8.84,10.91,Nordea Formålspension,Største fremgang i kundetilfredshed (EPSI 2026) men fortsat under konkurrenterne
-Industriens Pension,Arbejdsmarkedspension,267.48,,,,Højeste kundetilfredshed i branchen (EPSI 2026: nr. 1)
-PensionDanmark,Arbejdsmarkedspension,384.89,,,,EPSI 2026: nr. 2
-Lærernes Pension,Arbejdsmarkedspension,189.89,,,,
-Pædagogernes Pension,Arbejdsmarkedspension,108.06,,,,
-P+,Arbejdsmarkedspension,188.62,,,P+ Bæredygtig,EPSI 2026: nr. 4
-AkademikerPension,Arbejdsmarkedspension,165.56,,,,
-Sampension,Arbejdsmarkedspension,296.19,,,,
+selskab,selskabstype,aktiver_mia,afkast_10aar_pa,afkast_2025_jan_nov,afkast_produkt,baeredygtigt_produkt,tilfredshed
+PFA,Kommerciel,875.29,7.22,11.60,PFA Plus Profil Middel,PFA Klima+,Højeste kundetilfredshed blandt kommercielle selskaber (EPSI 2026: nr. 3 samlet)
+Danica,Kommerciel,609.29,7.50,6.41,Danica Balance Middel,Danica Ansvarligt Valg,
+Velliv,Kommerciel,355.33,6.33,8.90,Velliv Vækstpension Aktiv Mellem,Velliv Aftryk,
+AP Pension,Kommerciel,205.98,8.12,10.22,AP Active,AP Omtanke,
+Nordea Pension,Kommerciel,137.47,8.84,10.91,Nordea Profilpension Mellem,Nordea Formålspension,Største fremgang i kundetilfredshed (EPSI 2026) men fortsat under konkurrenterne
+Industriens Pension,Arbejdsmarkedspension,267.48,,,,,Højeste kundetilfredshed i branchen (EPSI 2026: nr. 1)
+PensionDanmark,Arbejdsmarkedspension,384.89,,,,,EPSI 2026: nr. 2
+Lærernes Pension,Arbejdsmarkedspension,189.89,,,,,
+Pædagogernes Pension,Arbejdsmarkedspension,108.06,,,,,
+P+,Arbejdsmarkedspension,188.62,,,,P+ Bæredygtig,EPSI 2026: nr. 4
+AkademikerPension,Arbejdsmarkedspension,165.56,,,,,
+Sampension,Arbejdsmarkedspension,296.19,,,,,

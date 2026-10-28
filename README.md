@@ -74,9 +74,11 @@ Nøgletallene på siden viser altid den seneste række i hver fil, så nye perio
 
 ## Sådan beregnes "Find pensionsselskab"
 
-- **ÅOP:** selskabets billigste markedsrenteprodukt for en typisk kunde (40–55 år, 30–80.000 kr. årligt, 500.000 kr. opsparet). Vælges "tæt på pension", eller kræves en bæredygtig profil, bruges ÅOP 5 år før pension ved den valgte risiko.
-- **Afkast:** gennemsnitligt årligt afkast 2016–november 2025, eller afkast januar–november 2025, for en kunde 20 år før pension ved middel risiko.
-- **Score:** det bedste selskab på hvert parameter får 100 point og det dårligste 0. De to vægtes efter skyderen.
+- **ÅOP:** selskabets billigste markedsrenteprodukt 5 år før pension ved den valgte risikoprofil (`aop_5aar.csv`), eller den billigste bæredygtige profil, hvis det kræves. Det er den eneste opgørelse med alle produkter (også indeksprodukter som AP Basis og Velliv Index) og alle tre risikoprofiler.
+- **Afkast:** gennemsnitligt årligt afkast 2016–november 2025, eller afkast januar–november 2025, for én bestemt profil pr. selskab (kolonnen `afkast_produkt` i `pension_selskaber.csv`) ved middel risiko, 20 år før pension. Afkastet ændrer sig ikke med risikovalget.
+- **Point:** omkostningspoint = billigste ÅOP ÷ selskabets ÅOP × 100. Afkastpoint = selskabets afkast ÷ bedste afkast × 100. Scoren vægter de to efter skyderen. Ligger samme selskab bedst på begge parametre, får det 100 uanset vægtningen.
+- Afkastet er efter omkostninger, så omkostninger tæller med i begge parametre.
+- Branche og overenskomst påvirker ikke ranglisten, men styrer boksen om overenskomstpension.
 - Norli er udeladt, da der kun er tal for gennemsnitsrente. Arbejdsmarkedspensioner vises kun til sammenligning, fordi de som regel kræver overenskomst eller medlemskab.
 - Forsikringsdækninger, rådgivning og kundetilfredshed indgår ikke i scoren.
 

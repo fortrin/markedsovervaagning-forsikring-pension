@@ -130,9 +130,9 @@
     },
     "pension_selskaber": {
       "titel": "Pensionsselskaber, afkast og størrelse",
-      "beskrivelse": "Pr. selskab: aktiver 2025 (Finanstilsynet), gennemsnitligt årligt afkast 2016–nov. 2025 og afkast jan.–nov. 2025 for en kunde 20 år før pension ved middel risiko (BEDSTpension forsikringsmægler, dec. 2025), bæredygtig profil og EPSI Pension 2026-placering.",
+      "beskrivelse": "Pr. selskab: aktiver 2025 (Finanstilsynet), gennemsnitligt årligt afkast 2016–nov. 2025 og afkast jan.–nov. 2025 for en kunde 20 år før pension ved middel risiko for den nævnte profil (afkast_produkt) (BEDSTpension forsikringsmægler, dec. 2025), bæredygtig profil og EPSI Pension 2026-placering.",
       "fil": "data/pension_selskaber.csv",
-      "opdateret": "2026-10-27",
+      "opdateret": "2026-10-28",
       "af": "Claude, fra Finanstilsynet, BEDSTpension og EPSI",
       "opdateres": "Årligt"
     },
@@ -155,7 +155,6 @@
   },
   "params": {
     "afkast": "10aar",
-    "alder": "langt",
     "baeredygtig": false,
     "branche": "Anden branche / ingen overenskomst",
     "overenskomst": "ved_ikke",
