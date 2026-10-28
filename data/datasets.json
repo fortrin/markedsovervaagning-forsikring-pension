@@ -2,7 +2,7 @@
   "datasets": {
     "dk_erhverv_puls": {
       "titel": "Danske erhvervspriser – selskabernes signaler",
-      "beskrivelse": "Præmievækst, combined ratio og prissignal for danske og nordiske erhvervssegmenter fra Gjensidige (Q3 2026), Tryg (Q3 2026), Alm. Brand (Q2 2026) og If/Sampo (Q2 2026). Præmievækst er i lokal valuta. Prissignal er Claudes sammenfatning af selskabernes egne udsagn.",
+      "beskrivelse": "Præmievækst, combined ratio og prissignal for danske og nordiske erhvervssegmenter fra Gjensidige (Q3 2026), Tryg (Q3 2026), Alm. Brand (Q3 2026) og If/Sampo (Q2 2026). Præmievækst er i lokal valuta. Prissignal er Claudes sammenfatning af selskabernes egne udsagn.",
       "fil": "data/dk_erhverv_puls.csv",
       "opdateret": "2026-10-28",
       "af": "Claude, fra selskabernes regnskaber",
@@ -74,9 +74,9 @@
     },
     "selskaber_kvartal": {
       "titel": "Selskabernes kvartalstal",
-      "beskrivelse": "Combined ratio pr. selskab og segment for seneste kvartal og samme periode året før, med bemærkninger om erhvervsmarkedet. Fra Tryg (Q3 2026), Gjensidige (Q3 2026, via Investing.com), Sampo/If (halvårsrapport 2026) og Alm. Brand (opjustering 5. okt. 2026).",
+      "beskrivelse": "Combined ratio pr. selskab og segment for seneste kvartal og samme periode året før, med bemærkninger om erhvervsmarkedet. Fra Tryg (Q3 2026), Gjensidige (Q3 2026, via Investing.com), Sampo/If (halvårsrapport 2026) og Alm. Brand (Q3 2026).",
       "fil": "data/selskaber_kvartal.csv",
-      "opdateret": "2026-10-27",
+      "opdateret": "2026-10-28",
       "af": "Claude, fra selskabernes regnskabsmeddelelser",
       "opdateres": "Kvartalsvis, efter selskabernes regnskaber"
     },
