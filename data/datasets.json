@@ -146,9 +146,9 @@
     },
     "haendelser": {
       "titel": "Markedshændelser",
-      "beskrivelse": "Udvalgte hændelser i 2025–2026, der påvirker priser og vilkår på det danske erhvervsforsikringsmarked, med kilde og link. Samlet af Claude fra selskabsmeddelelser, Marsh, Finanstilsynet og Kromann Reumert.",
+      "beskrivelse": "Udvalgte hændelser i 2025–2026, der påvirker priser og vilkår på det danske erhvervsforsikringsmarked, med kilde og link. Samlet af Claude fra selskabsmeddelelser, Marsh, Finanstilsynet, Kromann Reumert, selskabernes pressemeddelelser via Via Ritzau og fagmediet Reinsurance News.",
       "fil": "data/haendelser.json",
-      "opdateret": "2026-10-28",
+      "opdateret": "2026-11-02",
       "af": "Claude",
       "opdateres": "Løbende"
     }
