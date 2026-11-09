@@ -2,9 +2,9 @@
   "datasets": {
     "dk_erhverv_puls": {
       "titel": "Danske erhvervspriser – selskabernes signaler",
-      "beskrivelse": "Præmievækst, combined ratio og prissignal for danske og nordiske erhvervssegmenter fra Gjensidige (Q3 2026), Tryg (Q3 2026), Alm. Brand (Q3 2026) og If/Sampo (Q2 2026). Præmievækst er i lokal valuta. Prissignal er Claudes sammenfatning af selskabernes egne udsagn.",
+      "beskrivelse": "Præmievækst, combined ratio og prissignal for danske og nordiske erhvervssegmenter fra Gjensidige (Q3 2026), Tryg (Q3 2026), Alm. Brand (Q3 2026) og If/Sampo (1.–3. kvt. 2026, via Investing.com og Sampos pressemeddelelse). Præmievækst er i lokal valuta. Prissignal er Claudes sammenfatning af selskabernes egne udsagn.",
       "fil": "data/dk_erhverv_puls.csv",
-      "opdateret": "2026-10-28",
+      "opdateret": "2026-11-09",
       "af": "Claude, fra selskabernes regnskaber",
       "opdateres": "Kvartalsvis"
     },
@@ -18,9 +18,9 @@
     },
     "dk_arbejdsskade": {
       "titel": "Arbejdsskade efter Højesteret",
-      "beskrivelse": "Selskabernes hensættelser efter Højesterets dom af 28. april 2026, der sænkede tærsklen for erhvervsevnetab fra 15 % til 5 %. Fra Tryg, Alm. Brand, Gjensidige (via Økonomisk Ugebrev) og Sampo.",
+      "beskrivelse": "Selskabernes hensættelser efter Højesterets dom af 28. april 2026, der sænkede tærsklen for erhvervsevnetab fra 15 % til 5 %. Fra Tryg, Alm. Brand, Gjensidige (via Økonomisk Ugebrev) og Sampo (inkl. Sampos Q3-telefonkonference).",
       "fil": "data/dk_arbejdsskade.csv",
-      "opdateret": "2026-10-28",
+      "opdateret": "2026-11-09",
       "af": "Claude, fra selskabernes regnskaber",
       "opdateres": "Kvartalsvis"
     },
@@ -74,9 +74,9 @@
     },
     "selskaber_kvartal": {
       "titel": "Selskabernes kvartalstal",
-      "beskrivelse": "Combined ratio pr. selskab og segment for seneste kvartal og samme periode året før, med bemærkninger om erhvervsmarkedet. Fra Tryg (Q3 2026), Gjensidige (Q3 2026, via Investing.com), Sampo/If (halvårsrapport 2026) og Alm. Brand (Q3 2026).",
+      "beskrivelse": "Combined ratio pr. selskab og segment for seneste kvartal og samme periode året før, med bemærkninger om erhvervsmarkedet. Fra Tryg (Q3 2026), Gjensidige (Q3 2026, via Investing.com), Sampo/If (1.–3. kvt. 2026, via Investing.com og Sampos pressemeddelelse; året før-tal kun hvor oplyst) og Alm. Brand (Q3 2026).",
       "fil": "data/selskaber_kvartal.csv",
-      "opdateret": "2026-10-28",
+      "opdateret": "2026-11-09",
       "af": "Claude, fra selskabernes regnskabsmeddelelser",
       "opdateres": "Kvartalsvis, efter selskabernes regnskaber"
     },
@@ -148,7 +148,7 @@
       "titel": "Markedshændelser",
       "beskrivelse": "Udvalgte hændelser i 2025–2026, der påvirker priser og vilkår på det danske erhvervsforsikringsmarked, med kilde og link. Samlet af Claude fra selskabsmeddelelser, Marsh, Finanstilsynet, Kromann Reumert, selskabernes pressemeddelelser via Via Ritzau og fagmediet Reinsurance News.",
       "fil": "data/haendelser.json",
-      "opdateret": "2026-11-02",
+      "opdateret": "2026-11-09",
       "af": "Claude",
       "opdateres": "Løbende"
     }
